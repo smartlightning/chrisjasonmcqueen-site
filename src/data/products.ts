@@ -1,4 +1,5 @@
 // Single source of truth for the shop. Edit prices, copy, and links here.
+import { links } from './links';
 
 export interface Product {
   slug: string;
@@ -28,7 +29,7 @@ export const products: Product[] = [
     price: '$39',
     priceNumber: 39,
     cta: 'Get the pack',
-    buyUrl: 'https://buy.stripe.com/REPLACE_PRESETS_LINK',
+    buyUrl: links.stripe.presets,
     accent: 'from-amber-200 to-rose-300',
     features: [
       '12 signature presets (6 warm, 4 moody, 2 B&W)',
@@ -57,7 +58,7 @@ export const products: Product[] = [
     price: '$12',
     priceNumber: 12,
     cta: 'Download now',
-    buyUrl: 'https://buy.stripe.com/REPLACE_DEVOTIONAL_LINK',
+    buyUrl: links.stripe.devotional,
     accent: 'from-sky-200 to-indigo-300',
     features: [
       '30 days of guided reflections',
@@ -86,7 +87,7 @@ export const products: Product[] = [
     price: '$120',
     priceNumber: 120,
     cta: 'Book a call',
-    buyUrl: 'https://cal.com/chrisjasonmcqueen/mentorship',
+    buyUrl: links.cal.mentorship,
     accent: 'from-emerald-200 to-teal-300',
     features: [
       '60 minutes 1-on-1 over Zoom',

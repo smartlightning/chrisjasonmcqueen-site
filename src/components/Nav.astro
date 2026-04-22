@@ -1,5 +1,7 @@
 ---
-const links = [
+import { links } from '../data/links';
+
+const navLinks = [
   { href: '/about', label: 'About' },
   { href: '/watch', label: 'Watch' },
   { href: '/weddings', label: 'Weddings' },
@@ -14,7 +16,7 @@ const path = Astro.url.pathname;
   <nav class="max-w-6xl mx-auto px-6 h-12 flex items-center justify-between text-[13px]">
     <a href="/" class="font-display font-medium tracking-tight text-ink">Chris Jason McQueen</a>
     <ul class="hidden md:flex items-center gap-8 text-ink/80">
-      {links.map((l) => {
+      {navLinks.map((l) => {
         const active = path === l.href || (l.href !== '/' && path.startsWith(l.href));
         return (
           <li>
@@ -29,7 +31,7 @@ const path = Astro.url.pathname;
       })}
     </ul>
     <a
-      href="https://cal.com/chrisjasonmcqueen/intro"
+      href={links.cal.intro}
       target="_blank"
       rel="noopener"
       class="hidden md:inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-ink text-white text-[12px] font-medium hover:bg-ink/85 transition"

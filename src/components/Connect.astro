@@ -1,5 +1,6 @@
 ---
-// Email signup + simple contact CTA. Wired for ConvertKit / Buttondown / Beehiiv (replace action URL).
+// Email signup + simple contact CTA. Form action wired to Buttondown via links.ts.
+import { links } from '../data/links';
 ---
 
 <section id="connect" class="relative bg-paper py-32 md:py-48 overflow-hidden">
@@ -23,7 +24,7 @@
 
     <!-- Replace action with your provider's form endpoint (Buttondown / ConvertKit / Beehiiv) -->
     <form
-      action="https://buttondown.email/api/emails/embed-subscribe/YOUR_USERNAME"
+      action={links.buttondown.embedAction}
       method="post"
       target="_blank"
       class="mt-10 flex flex-col sm:flex-row gap-3 max-w-md mx-auto reveal"

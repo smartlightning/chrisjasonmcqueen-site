@@ -74,7 +74,7 @@ import '../styles/global.css';
       document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
 
       // Parallax: each [data-parallax] gets translated by speed * scroll delta from its center
-      const items = Array.from(document.querySelectorAll('[data-parallax]'));
+      const items = Array.from(document.querySelectorAll<HTMLElement>('[data-parallax]'));
       const ticking = { value: false };
 
       function update() {
