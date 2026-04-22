@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2400 1600" width="2400" height="1600">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1a1a1f"/>
+      <stop offset="0.5" stop-color="#3a2c2c"/>
+      <stop offset="1" stop-color="#7a4a3a"/>
+    </linearGradient>
+    <radialGradient id="r" cx="50%" cy="40%" r="60%">
+      <stop offset="0" stop-color="rgba(255,255,255,0.35)"/>
+      <stop offset="1" stop-color="rgba(255,255,255,0)"/>
+    </radialGradient>
+  </defs>
+  <rect width="2400" height="1600" fill="url(#g)"/>
+  <rect width="2400" height="1600" fill="url(#r)"/>
+  <g font-family="-apple-system, BlinkMacSystemFont, Inter, sans-serif" text-anchor="middle">
+    <text x="1200" y="790" font-size="108" font-weight="600" fill="#fbfbfd" letter-spacing="-1">Hero</text>
+    <text x="1200" y="830" font-size="43" fill="rgba(251,251,253,0.55)" letter-spacing="2">PLACEHOLDER · REPLACE IN /public/images</text>
+  </g>
+</svg>

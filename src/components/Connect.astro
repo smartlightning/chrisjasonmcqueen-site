@@ -1,0 +1,58 @@
+---
+// Email signup + simple contact CTA. Wired for ConvertKit / Buttondown / Beehiiv (replace action URL).
+---
+
+<section id="connect" class="relative bg-paper py-32 md:py-48 overflow-hidden">
+  <!-- Big soft parallax shape -->
+  <div
+    class="absolute -top-40 left-1/2 -translate-x-1/2 w-[120vw] h-[60vw] rounded-full bg-gradient-to-b from-amber-100 via-rose-100 to-transparent opacity-70 blur-3xl will-parallax"
+    data-parallax="0.18"
+    aria-hidden="true"
+  ></div>
+
+  <div class="relative max-w-3xl mx-auto px-6 text-center">
+    <p class="text-xs uppercase tracking-[0.25em] text-muted mb-6 reveal">Stay in touch</p>
+    <h2 class="h-display text-5xl md:text-7xl text-ink reveal">
+      Letters on faith,<br/>
+      <span class="text-muted">light & lenses.</span>
+    </h2>
+    <p class="mt-6 text-lg text-ink/70 max-w-xl mx-auto reveal">
+      One short, honest email a week. New videos, behind-the-scenes from shoots,
+      and the verses I'm sitting with. No spam, ever.
+    </p>
+
+    <!-- Replace action with your provider's form endpoint (Buttondown / ConvertKit / Beehiiv) -->
+    <form
+      action="https://buttondown.email/api/emails/embed-subscribe/YOUR_USERNAME"
+      method="post"
+      target="_blank"
+      class="mt-10 flex flex-col sm:flex-row gap-3 max-w-md mx-auto reveal"
+    >
+      <label for="email" class="sr-only">Email address</label>
+      <input
+        id="email"
+        type="email"
+        name="email"
+        required
+        placeholder="you@email.com"
+        class="flex-1 px-5 py-3 rounded-full bg-white border border-ink/15 text-ink placeholder-ink/40 focus:outline-none focus:ring-2 focus:ring-ink/30"
+      />
+      <button
+        type="submit"
+        class="px-6 py-3 rounded-full bg-ink text-white text-sm font-medium hover:bg-ink/85 transition"
+      >
+        Subscribe
+      </button>
+    </form>
+
+    <div class="mt-16 reveal">
+      <p class="text-sm text-muted">Booking a wedding or project?</p>
+      <a
+        href="mailto:chrisjasonmcqueen@icloud.com"
+        class="mt-2 inline-block font-display text-2xl md:text-3xl text-ink hover:text-ink/70 transition"
+      >
+        chrisjasonmcqueen@icloud.com
+      </a>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,49 @@
+---
+// Apple-style hero: huge type that scales as you scroll, photo background with parallax
+---
+
+<section class="relative h-[110vh] overflow-hidden bg-black text-white parallax-stage">
+  <!-- Background image with parallax -->
+  <div
+    class="absolute inset-0 will-parallax"
+    data-parallax="0.25"
+    data-parallax-scale="1.15"
+  >
+    <div
+      class="absolute inset-0 bg-cover bg-center"
+      style="background-image: linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.55) 60%, rgba(0,0,0,0.85) 100%), url('/images/hero.svg');"
+    ></div>
+  </div>
+
+  <!-- Foreground content -->
+  <div class="relative z-10 h-full flex flex-col items-center justify-center text-center px-6">
+    <p class="text-xs uppercase tracking-[0.25em] text-white/70 mb-6 reveal">Photographer · Creator · Believer</p>
+    <h1 class="h-display text-white text-[14vw] md:text-[8.5vw] leading-[0.95] reveal">
+      Chris Jason<br/>McQueen
+    </h1>
+    <p class="mt-8 max-w-xl text-lg md:text-xl text-white/85 reveal">
+      Telling stories of love, light, and faith — one frame, one film, one soul at a time.
+    </p>
+    <div class="mt-10 flex flex-wrap gap-4 justify-center reveal">
+      <a
+        href="https://youtube.com/@chrisjasonmcqueen"
+        target="_blank"
+        rel="noopener"
+        class="px-6 py-3 rounded-full bg-white text-ink text-sm font-medium hover:bg-white/90 transition"
+      >
+        Watch on YouTube
+      </a>
+      <a
+        href="#shop"
+        class="px-6 py-3 rounded-full border border-white/40 text-white text-sm font-medium hover:bg-white/10 transition"
+      >
+        Explore the Shop
+      </a>
+    </div>
+  </div>
+
+  <!-- Scroll cue -->
+  <div class="absolute bottom-8 inset-x-0 flex justify-center text-white/60 text-xs tracking-widest reveal">
+    SCROLL ↓
+  </div>
+</section>

@@ -1,0 +1,117 @@
+---
+export interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+}
+
+const {
+  title = 'Chris Jason McQueen — Faith, Photography & Film',
+  description = 'Wedding & project photographer. YouTube creator sharing faith, hope, and the gospel. Presets, devotionals, and 1-on-1 mentorship.',
+  image = '/og.svg',
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site).toString();
+
+import '../styles/global.css';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#000000" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={canonical} />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content="Chris Jason McQueen" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(image, Astro.site).toString()} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={new URL(image, Astro.site).toString()} />
+
+    <!-- JSON-LD Person -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Person',
+      name: 'Chris Jason McQueen',
+      url: 'https://chrisjasonmcqueen.com',
+      jobTitle: 'Photographer & YouTube Creator',
+      sameAs: ['https://youtube.com/@chrisjasonmcqueen'],
+    })} />
+
+    <link rel="preconnect" href="https://www.youtube.com" />
+    <link rel="preconnect" href="https://i.ytimg.com" />
+  </head>
+  <body>
+    <slot />
+
+    <script>
+      // Reveal on scroll
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const e of entries) {
+            if (e.isIntersecting) {
+              e.target.classList.add('in');
+              io.unobserve(e.target);
+            }
+          }
+        },
+        { threshold: 0.12 }
+      );
+      document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+
+      // Parallax: each [data-parallax] gets translated by speed * scroll delta from its center
+      const items = Array.from(document.querySelectorAll('[data-parallax]'));
+      const ticking = { value: false };
+
+      function update() {
+        const vh = window.innerHeight;
+        for (const el of items) {
+          const rect = el.getBoundingClientRect();
+          const center = rect.top + rect.height / 2;
+          const delta = center - vh / 2;
+          const speed = parseFloat(el.getAttribute('data-parallax') || '0.15');
+          const y = -delta * speed;
+          const scaleAttr = el.getAttribute('data-parallax-scale');
+          if (scaleAttr) {
+            const max = parseFloat(scaleAttr);
+            // progress 0 -> 1 as element scrolls through viewport
+            const progress = Math.min(
+              1,
+              Math.max(0, 1 - (rect.top + rect.height) / (vh + rect.height))
+            );
+            const s = 1 + (max - 1) * progress;
+            el.style.transform = `translate3d(0, ${y.toFixed(2)}px, 0) scale(${s.toFixed(3)})`;
+          } else {
+            el.style.transform = `translate3d(0, ${y.toFixed(2)}px, 0)`;
+          }
+        }
+        ticking.value = false;
+      }
+
+      function onScroll() {
+        if (!ticking.value) {
+          window.requestAnimationFrame(update);
+          ticking.value = true;
+        }
+      }
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll);
+      update();
+    </script>
+  </body>
+</html>

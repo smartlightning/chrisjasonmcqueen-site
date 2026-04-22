@@ -1,0 +1,31 @@
+---
+// "Pinned" Apple-style section: a sticky frame where text reveals as user scrolls
+---
+
+<section id="story" class="pin-section bg-paper">
+  <div class="pin-inner">
+    <!-- Background photo with subtle parallax -->
+    <div
+      class="absolute inset-0 will-parallax"
+      data-parallax="0.12"
+      data-parallax-scale="1.08"
+    >
+      <div
+        class="absolute inset-0 bg-cover bg-center opacity-95"
+        style="background-image: linear-gradient(180deg, rgba(251,251,253,0) 0%, rgba(251,251,253,0.6) 100%), url('/images/story.svg');"
+      ></div>
+    </div>
+
+    <div class="relative z-10 max-w-4xl mx-auto px-6 text-center">
+      <p class="text-xs uppercase tracking-[0.25em] text-muted mb-6 reveal">A bit about me</p>
+      <h2 class="h-display text-ink text-5xl md:text-7xl reveal">
+        Faith first.<br/>
+        <span class="text-muted">Frames second.</span>
+      </h2>
+      <p class="mt-8 text-lg md:text-2xl text-ink/80 max-w-2xl mx-auto leading-snug reveal">
+        I'm a part-time wedding & project photographer, and a full-time storyteller for the Kingdom.
+        On YouTube I share honest conversations about following Jesus in a noisy world.
+      </p>
+    </div>
+  </div>
+</section>

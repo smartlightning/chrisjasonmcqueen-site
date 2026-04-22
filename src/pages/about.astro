@@ -1,0 +1,101 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Base
+  title="About — Chris Jason McQueen"
+  description="Photographer, YouTube creator, follower of Jesus. Here's the story."
+>
+  <Nav />
+
+  <main class="bg-paper pt-24">
+    <!-- Hero -->
+    <section class="max-w-3xl mx-auto px-6 py-24 text-center">
+      <p class="text-xs uppercase tracking-[0.25em] text-muted mb-6 reveal">About</p>
+      <h1 class="h-display text-ink text-5xl md:text-7xl reveal">
+        Hi, I'm Chris.
+      </h1>
+      <p class="mt-8 text-lg md:text-xl text-ink/75 reveal leading-relaxed">
+        I'm a part-time wedding & project photographer and a YouTube creator making videos
+        about faith, identity, and what it actually looks like to follow Jesus today.
+      </p>
+    </section>
+
+    <!-- Portrait + bio -->
+    <section class="max-w-5xl mx-auto px-6 pb-24 grid md:grid-cols-5 gap-12 items-start">
+      <div class="md:col-span-2 reveal">
+        <div class="aspect-[4/5] rounded-2xl overflow-hidden bg-ink/5">
+          <div
+            class="w-full h-full bg-cover bg-center will-parallax"
+            data-parallax="0.06"
+            style="background-image: url('/images/about.svg');"
+          ></div>
+        </div>
+      </div>
+      <div class="md:col-span-3 space-y-6 text-ink/80 leading-relaxed text-lg">
+        <p class="reveal">
+          I picked up a camera in my late teens and never put it down. What started as
+          shooting friends' bands turned into weddings, brand work, and eventually
+          short films.
+        </p>
+        <p class="reveal">
+          A few years in, I gave my life to Jesus. Everything changed — not the love for
+          the craft, but the reason behind it. I started making videos on YouTube partly
+          to process my own faith, partly because I couldn't find honest Christian content
+          that didn't feel like a sales pitch.
+        </p>
+        <p class="reveal">
+          Today the channel is small but mighty. I'd rather have 100 viewers really wrestling
+          with what I'm saying than 10,000 scrolling past. Same with photography —
+          I take a small number of weddings each year so I can actually show up for each one.
+        </p>
+        <p class="reveal text-ink font-medium">
+          Soli Deo gloria.
+        </p>
+      </div>
+    </section>
+
+    <!-- Stats / cards -->
+    <section class="bg-black text-white py-24">
+      <div class="max-w-5xl mx-auto px-6 grid sm:grid-cols-3 gap-10 text-center">
+        <div class="reveal">
+          <div class="font-display font-semibold text-5xl">50+</div>
+          <p class="mt-2 text-sm text-white/60">Weddings shot</p>
+        </div>
+        <div class="reveal">
+          <div class="font-display font-semibold text-5xl">100+</div>
+          <p class="mt-2 text-sm text-white/60">YouTube videos</p>
+        </div>
+        <div class="reveal">
+          <div class="font-display font-semibold text-5xl">1</div>
+          <p class="mt-2 text-sm text-white/60">Reason for all of it</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="max-w-2xl mx-auto px-6 py-24 text-center">
+      <h2 class="h-display text-ink text-3xl md:text-5xl reveal">Let's connect.</h2>
+      <div class="mt-10 flex flex-wrap justify-center gap-4 reveal">
+        <a
+          href="https://youtube.com/@chrisjasonmcqueen?sub_confirmation=1"
+          target="_blank"
+          rel="noopener"
+          class="px-6 py-3 rounded-full bg-red-600 hover:bg-red-500 text-white text-sm font-medium transition"
+        >
+          Subscribe on YouTube
+        </a>
+        <a
+          href="mailto:chrisjasonmcqueen@icloud.com"
+          class="px-6 py-3 rounded-full bg-ink text-white text-sm font-medium hover:bg-ink/85 transition"
+        >
+          Email me
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Base>

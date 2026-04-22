@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://chrisjasonmcqueen.com/sitemap-index.xml

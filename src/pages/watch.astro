@@ -1,0 +1,150 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import { featured, videos, ytThumb, ytWatch, ytEmbed } from '../data/videos';
+
+const categories = ['All', 'Faith', 'Discipline', 'Identity', 'Discipleship'];
+---
+
+<Base
+  title="Watch — Chris Jason McQueen"
+  description="Honest YouTube videos about faith, discipline, identity, and following Jesus today."
+>
+  <Nav />
+
+  <main class="bg-black text-white pt-24">
+    <!-- Featured hero -->
+    <section class="relative overflow-hidden">
+      <div class="absolute inset-0 opacity-30 will-parallax" data-parallax="0.15">
+        <div
+          class="absolute inset-0 bg-cover bg-center blur-2xl"
+          style={`background-image: url('${ytThumb(featured.id)}');`}
+        ></div>
+      </div>
+
+      <div class="relative max-w-6xl mx-auto px-6 py-20 grid md:grid-cols-2 gap-12 items-center">
+        <div>
+          <p class="text-xs uppercase tracking-[0.25em] text-white/60 mb-6 reveal">Featured</p>
+          <h1 class="h-display text-5xl md:text-6xl reveal">{featured.title}</h1>
+          <p class="mt-6 text-lg text-white/80 max-w-md reveal">{featured.description}</p>
+          <div class="mt-8 flex flex-wrap gap-4 reveal">
+            <a
+              href="https://youtube.com/@chrisjasonmcqueen?sub_confirmation=1"
+              target="_blank"
+              rel="noopener"
+              class="px-6 py-3 rounded-full bg-red-600 hover:bg-red-500 text-white text-sm font-medium transition"
+            >
+              Subscribe on YouTube
+            </a>
+            <a
+              href={ytWatch(featured.id)}
+              target="_blank"
+              rel="noopener"
+              class="px-6 py-3 rounded-full border border-white/40 text-white text-sm font-medium hover:bg-white/10 transition"
+            >
+              Open on YouTube
+            </a>
+          </div>
+        </div>
+
+        <div class="relative reveal">
+          <div class="aspect-video rounded-2xl overflow-hidden ring-1 ring-white/10">
+            <iframe
+              class="w-full h-full"
+              src={ytEmbed(featured.id)}
+              title={featured.title}
+              loading="lazy"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            ></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Filter chips (visual only — JS toggles) -->
+    <section class="max-w-6xl mx-auto px-6 pt-12">
+      <div class="flex flex-wrap gap-2" id="filters">
+        {categories.map((c, i) => (
+          <button
+            type="button"
+            data-cat={c}
+            class={`px-4 py-1.5 rounded-full text-sm border border-white/15 hover:border-white/40 transition ${
+              i === 0 ? 'bg-white text-ink border-white' : 'text-white/80'
+            }`}
+          >
+            {c}
+          </button>
+        ))}
+      </div>
+    </section>
+
+    <!-- Video grid -->
+    <section class="max-w-6xl mx-auto px-6 py-16">
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" id="videoGrid">
+        {videos.map((v) => (
+          <a
+            href={ytWatch(v.id)}
+            target="_blank"
+            rel="noopener"
+            class="group block reveal"
+            data-cat={v.category}
+          >
+            <div class="relative aspect-video rounded-xl overflow-hidden ring-1 ring-white/10 bg-white/5">
+              <img
+                src={ytThumb(v.id)}
+                alt={v.title}
+                loading="lazy"
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+              <div class="absolute top-3 left-3 text-[10px] uppercase tracking-[0.15em] px-2 py-1 rounded-full bg-black/50 backdrop-blur text-white/90">
+                {v.category}
+              </div>
+              <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
+                <div class="w-14 h-14 rounded-full bg-white/95 text-ink flex items-center justify-center text-xl">▶</div>
+              </div>
+            </div>
+            <h3 class="mt-4 font-display font-medium text-lg leading-snug group-hover:text-white/90">{v.title}</h3>
+            <p class="mt-1 text-sm text-white/60 line-clamp-2">{v.description}</p>
+          </a>
+        ))}
+      </div>
+
+      <div class="mt-16 text-center reveal">
+        <a
+          href="https://youtube.com/@chrisjasonmcqueen/videos"
+          target="_blank"
+          rel="noopener"
+          class="inline-flex items-center gap-2 text-white/80 hover:text-white"
+        >
+          See all videos on YouTube <span aria-hidden="true">›</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Base>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>('#filters button');
+  const cards = document.querySelectorAll<HTMLAnchorElement>('#videoGrid > a');
+  buttons.forEach((b) => {
+    b.addEventListener('click', () => {
+      const cat = b.dataset.cat || 'All';
+      buttons.forEach((x) => {
+        x.classList.remove('bg-white', 'text-ink', 'border-white');
+        x.classList.add('text-white/80');
+      });
+      b.classList.add('bg-white', 'text-ink', 'border-white');
+      b.classList.remove('text-white/80');
+      cards.forEach((c) => {
+        const show = cat === 'All' || c.dataset.cat === cat;
+        c.style.display = show ? '' : 'none';
+      });
+    });
+  });
+</script>

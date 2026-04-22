@@ -1,0 +1,41 @@
+---
+const links = [
+  { href: '/about', label: 'About' },
+  { href: '/watch', label: 'Watch' },
+  { href: '/weddings', label: 'Weddings' },
+  { href: '/shop', label: 'Shop' },
+  { href: '/blog', label: 'Journal' },
+  { href: '/contact', label: 'Contact' },
+];
+const path = Astro.url.pathname;
+---
+
+<header class="fixed top-0 inset-x-0 z-50 glass border-b border-black/5">
+  <nav class="max-w-6xl mx-auto px-6 h-12 flex items-center justify-between text-[13px]">
+    <a href="/" class="font-display font-medium tracking-tight text-ink">Chris Jason McQueen</a>
+    <ul class="hidden md:flex items-center gap-8 text-ink/80">
+      {links.map((l) => {
+        const active = path === l.href || (l.href !== '/' && path.startsWith(l.href));
+        return (
+          <li>
+            <a
+              href={l.href}
+              class={`hover:text-ink transition-colors ${active ? 'text-ink font-medium' : ''}`}
+            >
+              {l.label}
+            </a>
+          </li>
+        );
+      })}
+    </ul>
+    <a
+      href="https://youtube.com/@chrisjasonmcqueen?sub_confirmation=1"
+      target="_blank"
+      rel="noopener"
+      class="hidden md:inline-flex items-center gap-1.5 text-ink/80 hover:text-ink"
+    >
+      Subscribe
+      <span aria-hidden="true">›</span>
+    </a>
+  </nav>
+</header>

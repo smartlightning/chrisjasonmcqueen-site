@@ -1,0 +1,161 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+
+const photos = [
+  { src: '/images/work-1.svg', alt: 'Wedding ceremony', span: 'md:row-span-2' },
+  { src: '/images/work-2.svg', alt: 'Bride and groom portrait', span: '' },
+  { src: '/images/work-3.svg', alt: 'Bridal party', span: '' },
+  { src: '/images/work-4.svg', alt: 'Detail shot', span: 'md:row-span-2' },
+  { src: '/images/work-5.svg', alt: 'Candid moment', span: '' },
+  { src: '/images/work-6.svg', alt: 'Reception', span: '' },
+  { src: '/images/work-7.svg', alt: 'First dance', span: '' },
+  { src: '/images/work-8.svg', alt: 'Golden hour portrait', span: 'md:row-span-2' },
+];
+
+const packages = [
+  {
+    name: 'Half Day',
+    price: 'from £900',
+    duration: '4 hours coverage',
+    includes: ['Ceremony or reception', '~250 edited photos', 'Online gallery', '2-week delivery'],
+  },
+  {
+    name: 'Full Day',
+    price: 'from £1,650',
+    duration: '8 hours coverage',
+    featured: true,
+    includes: [
+      'Prep → first dance',
+      '~500 edited photos',
+      'Online gallery + USB',
+      'Sneak peeks in 48h',
+      'Engagement shoot included',
+    ],
+  },
+  {
+    name: 'Project / Brand',
+    price: 'Custom quote',
+    duration: 'Half / full day',
+    includes: ['Brand or project shoot', 'Edited delivery', 'Commercial license', 'Discovery call'],
+  },
+];
+---
+
+<Base
+  title="Weddings & Projects — Chris Jason McQueen"
+  description="Wedding and project photography. Honest, intentional, story-driven imagery."
+>
+  <Nav />
+
+  <main class="bg-paper pt-24">
+    <!-- Hero -->
+    <section class="relative h-[80vh] overflow-hidden bg-black text-white">
+      <div class="absolute inset-0 will-parallax" data-parallax="0.2" data-parallax-scale="1.12">
+        <div
+          class="absolute inset-0 bg-cover bg-center"
+          style="background-image: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.7) 100%), url('/images/weddings-hero.svg');"
+        ></div>
+      </div>
+      <div class="relative h-full flex flex-col items-center justify-center text-center px-6">
+        <p class="text-xs uppercase tracking-[0.25em] text-white/70 mb-6 reveal">Weddings & Projects</p>
+        <h1 class="h-display text-5xl md:text-7xl max-w-3xl reveal">Your day, told honestly.</h1>
+        <p class="mt-6 max-w-xl text-lg text-white/85 reveal">
+          I shoot a small number of weddings each year. Not posed. Not staged. Just the day, as it happens.
+        </p>
+      </div>
+    </section>
+
+    <!-- Photo grid -->
+    <section class="max-w-6xl mx-auto px-6 py-24">
+      <div class="grid grid-cols-2 md:grid-cols-4 auto-rows-[28vh] md:auto-rows-[26vh] gap-3 md:gap-4">
+        {photos.map((p, i) => (
+          <figure class={`relative overflow-hidden rounded-xl bg-ink/5 reveal ${p.span}`}>
+            <div
+              class="absolute inset-0 will-parallax bg-cover bg-center"
+              data-parallax={(0.04 + (i % 3) * 0.03).toFixed(2)}
+              data-parallax-scale="1.15"
+              style={`background-image: url('${p.src}');`}
+              role="img"
+              aria-label={p.alt}
+            ></div>
+          </figure>
+        ))}
+      </div>
+    </section>
+
+    <!-- Approach -->
+    <section class="bg-black text-white py-32">
+      <div class="max-w-3xl mx-auto px-6 text-center">
+        <p class="text-xs uppercase tracking-[0.25em] text-white/60 mb-6 reveal">My approach</p>
+        <h2 class="h-display text-4xl md:text-6xl reveal">
+          Documentary first.<br/>
+          <span class="text-white/60">Posed only when it matters.</span>
+        </h2>
+        <p class="mt-8 text-lg text-white/80 reveal">
+          You won't catch me orchestrating fake "candids" for an hour. I'll get the family shots done quickly,
+          then disappear into the day so you can actually live it.
+        </p>
+      </div>
+    </section>
+
+    <!-- Packages -->
+    <section class="max-w-6xl mx-auto px-6 py-32">
+      <div class="text-center mb-16">
+        <p class="text-xs uppercase tracking-[0.25em] text-muted mb-6 reveal">Packages</p>
+        <h2 class="h-display text-ink text-4xl md:text-6xl reveal">Simple, honest pricing.</h2>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        {packages.map((pkg) => (
+          <div class={`relative rounded-3xl p-8 flex flex-col reveal ${pkg.featured ? 'bg-ink text-white' : 'bg-white text-ink shadow-sm'}`}>
+            {pkg.featured && (
+              <span class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-amber-300 text-ink text-xs font-medium">
+                Most booked
+              </span>
+            )}
+            <h3 class="font-display font-semibold text-2xl">{pkg.name}</h3>
+            <p class={`mt-2 text-sm ${pkg.featured ? 'text-white/60' : 'text-muted'}`}>{pkg.duration}</p>
+            <p class="mt-6 font-display font-semibold text-3xl">{pkg.price}</p>
+            <ul class="mt-6 space-y-2 text-sm">
+              {pkg.includes.map((i) => (
+                <li class="flex items-start gap-2">
+                  <span class={`mt-2 w-1.5 h-1.5 rounded-full ${pkg.featured ? 'bg-white/60' : 'bg-ink/60'} shrink-0`}></span>
+                  <span class={pkg.featured ? 'text-white/85' : 'text-ink/80'}>{i}</span>
+                </li>
+              ))}
+            </ul>
+            <a
+              href="#inquire"
+              class={`mt-8 inline-flex items-center justify-center gap-1 px-5 py-3 rounded-full text-sm font-medium transition ${
+                pkg.featured ? 'bg-white text-ink hover:bg-white/90' : 'bg-ink text-white hover:bg-ink/85'
+              }`}
+            >
+              Inquire <span aria-hidden="true">›</span>
+            </a>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Inquire -->
+    <section id="inquire" class="bg-paper py-32">
+      <div class="max-w-2xl mx-auto px-6 text-center">
+        <p class="text-xs uppercase tracking-[0.25em] text-muted mb-6 reveal">Inquire</p>
+        <h2 class="h-display text-ink text-4xl md:text-5xl reveal">Tell me about your day.</h2>
+        <p class="mt-4 text-ink/70 reveal">
+          The fastest way to get a quote is a quick email with the date, location, and a sentence about you both.
+        </p>
+        <a
+          href="mailto:chrisjasonmcqueen@icloud.com?subject=Wedding%20Inquiry"
+          class="mt-8 inline-block font-display text-2xl md:text-3xl text-ink hover:text-ink/70 transition reveal"
+        >
+          chrisjasonmcqueen@icloud.com
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Base>

@@ -1,0 +1,139 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Base title="Contact — Chris Jason McQueen" description="Get in touch about a wedding, project, or anything else.">
+  <Nav />
+
+  <main class="bg-paper pt-24">
+    <section class="relative overflow-hidden">
+      <div
+        class="absolute -top-40 left-1/2 -translate-x-1/2 w-[120vw] h-[60vw] rounded-full bg-gradient-to-b from-amber-100 via-rose-100 to-transparent opacity-70 blur-3xl will-parallax"
+        data-parallax="0.18"
+        aria-hidden="true"
+      ></div>
+
+      <div class="relative max-w-3xl mx-auto px-6 py-20 text-center">
+        <p class="text-xs uppercase tracking-[0.25em] text-muted mb-6 reveal">Contact</p>
+        <h1 class="h-display text-ink text-5xl md:text-7xl reveal">Say hello.</h1>
+        <p class="mt-6 text-lg text-ink/70 max-w-xl mx-auto reveal">
+          Wedding, project, mentorship, or just want to say a verse hit you — write below.
+          I read every message and reply within a couple of days.
+        </p>
+      </div>
+    </section>
+
+    <section class="max-w-2xl mx-auto px-6 pb-24">
+      <form id="contactForm" class="space-y-6 reveal" novalidate>
+        <div class="grid sm:grid-cols-2 gap-6">
+          <div>
+            <label for="name" class="block text-sm font-medium text-ink mb-2">Your name</label>
+            <input
+              id="name" name="name" type="text" required autocomplete="name"
+              class="w-full px-4 py-3 rounded-xl bg-white border border-ink/15 text-ink placeholder-ink/40 focus:outline-none focus:ring-2 focus:ring-ink/30"
+              placeholder="Jane Doe"
+            />
+          </div>
+          <div>
+            <label for="email" class="block text-sm font-medium text-ink mb-2">Email</label>
+            <input
+              id="email" name="email" type="email" required autocomplete="email"
+              class="w-full px-4 py-3 rounded-xl bg-white border border-ink/15 text-ink placeholder-ink/40 focus:outline-none focus:ring-2 focus:ring-ink/30"
+              placeholder="you@email.com"
+            />
+          </div>
+        </div>
+
+        <div>
+          <label for="topic" class="block text-sm font-medium text-ink mb-2">What's this about?</label>
+          <select
+            id="topic" name="topic"
+            class="w-full px-4 py-3 rounded-xl bg-white border border-ink/15 text-ink focus:outline-none focus:ring-2 focus:ring-ink/30"
+          >
+            <option>Wedding inquiry</option>
+            <option>Project / brand shoot</option>
+            <option>Mentorship</option>
+            <option>YouTube collab</option>
+            <option>Something else</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="message" class="block text-sm font-medium text-ink mb-2">Message</label>
+          <textarea
+            id="message" name="message" rows="6" required
+            class="w-full px-4 py-3 rounded-xl bg-white border border-ink/15 text-ink placeholder-ink/40 focus:outline-none focus:ring-2 focus:ring-ink/30 resize-y"
+            placeholder="Date, location, and a sentence about you both — or whatever's on your mind."
+          ></textarea>
+        </div>
+
+        <!-- Honeypot (hidden from humans, bots fill it in) -->
+        <div class="hidden" aria-hidden="true">
+          <label>Don't fill this out: <input name="website" tabindex="-1" autocomplete="off" /></label>
+        </div>
+
+        <div class="flex flex-wrap items-center justify-between gap-4 pt-2">
+          <p id="formStatus" class="text-sm text-muted" role="status" aria-live="polite"></p>
+          <button
+            type="submit" id="submitBtn"
+            class="px-7 py-3 rounded-full bg-ink text-white text-sm font-medium hover:bg-ink/85 transition disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Send message
+          </button>
+        </div>
+      </form>
+
+      <div class="mt-16 text-center">
+        <p class="text-sm text-muted">Prefer email? Write to me directly:</p>
+        <a
+          href="mailto:chrisjasonmcqueen@icloud.com"
+          class="mt-2 inline-block font-display text-2xl md:text-3xl text-ink hover:text-ink/70 transition"
+        >
+          chrisjasonmcqueen@icloud.com
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Base>
+
+<script>
+  const form = document.getElementById('contactForm') as HTMLFormElement;
+  const status = document.getElementById('formStatus') as HTMLElement;
+  const btn = document.getElementById('submitBtn') as HTMLButtonElement;
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    status.textContent = 'Sending…';
+    status.className = 'text-sm text-muted';
+    btn.disabled = true;
+
+    const data = Object.fromEntries(new FormData(form).entries());
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.error || `Server returned ${res.status}`);
+      }
+
+      status.textContent = 'Sent — I\'ll reply within 2 days.';
+      status.className = 'text-sm text-emerald-700';
+      form.reset();
+    } catch (err: any) {
+      status.textContent = `Hmm, something broke. Email me directly: chrisjasonmcqueen@icloud.com`;
+      status.className = 'text-sm text-red-700';
+      console.error(err);
+    } finally {
+      btn.disabled = false;
+    }
+  });
+</script>

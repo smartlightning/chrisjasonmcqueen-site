@@ -1,0 +1,77 @@
+---
+import Base from '../../layouts/Base.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+const featured = posts[0];
+const rest = posts.slice(1);
+
+const fmt = (d: Date) =>
+  d.toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' });
+---
+
+<Base
+  title="Journal — Chris Jason McQueen"
+  description="Honest writing on faith, photography, and the creative life."
+>
+  <Nav />
+
+  <main class="bg-paper pt-24">
+    <section class="max-w-6xl mx-auto px-6 py-16">
+      <p class="text-xs uppercase tracking-[0.25em] text-muted mb-6 reveal">Journal</p>
+      <h1 class="h-display text-ink text-5xl md:text-7xl reveal">Words, when video<br/><span class="text-muted">won't do.</span></h1>
+      <p class="mt-6 max-w-xl text-lg text-ink/70 reveal">
+        Longer thoughts that don't fit a YouTube video. Faith, photography, the in-between.
+      </p>
+    </section>
+
+    {featured && (
+      <section class="max-w-6xl mx-auto px-6 pb-12">
+        <a href={`/blog/${featured.slug}`} class="group block reveal">
+          <div class="grid md:grid-cols-2 gap-8 lg:gap-12 items-center">
+            <div class="relative aspect-[4/3] rounded-2xl overflow-hidden bg-ink/5">
+              <div
+                class="absolute inset-0 bg-cover bg-center will-parallax group-hover:scale-105 transition-transform duration-700"
+                data-parallax="0.06"
+                style={`background-image: url('${featured.data.image || '/images/story.svg'}');`}
+              ></div>
+            </div>
+            <div>
+              <p class="text-[11px] uppercase tracking-[0.18em] text-muted">{featured.data.category} · {fmt(featured.data.pubDate)}</p>
+              <h2 class="h-display text-3xl md:text-5xl text-ink mt-4 group-hover:text-ink/70 transition">{featured.data.title}</h2>
+              <p class="mt-4 text-lg text-ink/70">{featured.data.description}</p>
+              <span class="inline-flex items-center gap-1 mt-6 text-ink font-medium">
+                Read post <span aria-hidden="true">›</span>
+              </span>
+            </div>
+          </div>
+        </a>
+      </section>
+    )}
+
+    <section class="max-w-6xl mx-auto px-6 pb-32">
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        {rest.map((p) => (
+          <a href={`/blog/${p.slug}`} class="group block reveal">
+            <div class="relative aspect-[4/3] rounded-xl overflow-hidden bg-ink/5">
+              <div
+                class="absolute inset-0 bg-cover bg-center group-hover:scale-105 transition-transform duration-700"
+                style={`background-image: url('${p.data.image || '/images/story.svg'}');`}
+              ></div>
+            </div>
+            <p class="mt-4 text-[11px] uppercase tracking-[0.18em] text-muted">{p.data.category} · {fmt(p.data.pubDate)}</p>
+            <h3 class="font-display font-medium text-xl text-ink mt-2 group-hover:text-ink/70 transition leading-snug">{p.data.title}</h3>
+            <p class="mt-2 text-sm text-ink/60 line-clamp-2">{p.data.description}</p>
+          </a>
+        ))}
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Base>

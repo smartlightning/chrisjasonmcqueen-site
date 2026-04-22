@@ -1,0 +1,38 @@
+backend:
+  name: github
+  repo: YOUR_GITHUB_USERNAME/chrisjasonmcqueen-site
+  branch: main
+
+# Pages-style auth handled by the Decap OAuth proxy on Cloudflare Workers.
+# Setup instructions in ACTIONS.md (Phase 5).
+
+site_url: https://chrisjasonmcqueen.com
+display_url: https://chrisjasonmcqueen.com
+logo_url: https://chrisjasonmcqueen.com/favicon.svg
+
+media_folder: "public/images/blog"
+public_folder: "/images/blog"
+
+publish_mode: editorial_workflow
+
+collections:
+  - name: "blog"
+    label: "Blog Posts"
+    folder: "src/content/blog"
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Description", name: "description", widget: "text" }
+      - { label: "Publish Date", name: "pubDate", widget: "datetime", format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
+      - { label: "Updated Date", name: "updatedDate", widget: "datetime", format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false, required: false }
+      - label: "Category"
+        name: "category"
+        widget: "select"
+        options: ["Faith", "Discipline", "Identity", "Discipleship", "Behind the Scenes"]
+        default: "Faith"
+      - { label: "Cover Image", name: "image", widget: "image", required: false }
+      - { label: "Draft", name: "draft", widget: "boolean", default: false, required: false }
+      - { label: "Body", name: "body", widget: "markdown" }

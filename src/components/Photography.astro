@@ -1,0 +1,51 @@
+---
+// Photography portfolio with parallax photo grid
+const photos = [
+  { src: '/images/work-1.svg', alt: 'Wedding ceremony', span: 'md:row-span-2' },
+  { src: '/images/work-2.svg', alt: 'Bride and groom portrait', span: '' },
+  { src: '/images/work-3.svg', alt: 'Project work', span: '' },
+  { src: '/images/work-4.svg', alt: 'Detail shot', span: 'md:row-span-2' },
+  { src: '/images/work-5.svg', alt: 'Candid moment', span: '' },
+  { src: '/images/work-6.svg', alt: 'Reception', span: '' },
+];
+---
+
+<section id="photography" class="bg-paper py-32 md:py-48">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="text-center mb-20">
+      <p class="text-xs uppercase tracking-[0.25em] text-muted mb-6 reveal">Selected Work</p>
+      <h2 class="h-display text-5xl md:text-7xl text-ink reveal">
+        Weddings.<br/>
+        <span class="text-muted">Projects. People.</span>
+      </h2>
+      <p class="mt-6 text-lg text-ink/70 max-w-xl mx-auto reveal">
+        Documenting the small, sacred moments that make a story unforgettable.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-3 auto-rows-[28vh] md:auto-rows-[32vh] gap-3 md:gap-4">
+      {photos.map((p, i) => (
+        <figure class={`relative overflow-hidden rounded-xl bg-ink/5 reveal ${p.span}`}>
+          <div
+            class="absolute inset-0 will-parallax bg-cover bg-center"
+            data-parallax={(0.05 + (i % 3) * 0.04).toFixed(2)}
+            data-parallax-scale="1.18"
+            style={`background-image: url('${p.src}');`}
+            role="img"
+            aria-label={p.alt}
+          ></div>
+        </figure>
+      ))}
+    </div>
+
+    <div class="mt-16 text-center reveal">
+      <a
+        href="/weddings"
+        class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-ink text-white text-sm font-medium hover:bg-ink/90 transition"
+      >
+        See wedding work
+        <span aria-hidden="true">›</span>
+      </a>
+    </div>
+  </div>
+</section>

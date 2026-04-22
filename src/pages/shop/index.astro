@@ -1,0 +1,74 @@
+---
+import Base from '../../layouts/Base.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import { products } from '../../data/products';
+---
+
+<Base
+  title="Shop — Chris Jason McQueen"
+  description="Lightroom presets, faith devotionals, and 1-on-1 mentorship calls."
+>
+  <Nav />
+
+  <main class="bg-paper pt-24">
+    <!-- Hero -->
+    <section class="max-w-6xl mx-auto px-6 pt-16 pb-20 text-center">
+      <p class="text-xs uppercase tracking-[0.25em] text-muted mb-6 reveal">The Shop</p>
+      <h1 class="h-display text-ink text-5xl md:text-7xl reveal">
+        Tools for the<br/>
+        <span class="text-muted">creator & the called.</span>
+      </h1>
+      <p class="mt-6 text-lg text-ink/70 max-w-xl mx-auto reveal">
+        Everything I sell, I actually use. Presets I edit weddings with.
+        Devotionals I read myself. Calls I take seriously.
+      </p>
+    </section>
+
+    <!-- Products -->
+    <section class="max-w-6xl mx-auto px-6 pb-32">
+      <div class="grid md:grid-cols-3 gap-6">
+        {products.map((p, i) => (
+          <a
+            href={`/shop/${p.slug}`}
+            class="group relative rounded-3xl bg-white text-ink p-8 flex flex-col reveal will-parallax overflow-hidden hover:-translate-y-1 transition-transform shadow-sm"
+            data-parallax={(0.03 + i * 0.02).toFixed(2)}
+          >
+            <div class={`absolute -top-24 -right-24 w-64 h-64 rounded-full bg-gradient-to-br ${p.accent} opacity-70 blur-2xl group-hover:opacity-90 transition`}></div>
+
+            <div class="relative">
+              <span class="inline-block text-[11px] uppercase tracking-[0.18em] text-muted">{p.badge}</span>
+              <h3 class="mt-4 font-display font-semibold text-2xl tracking-tight">{p.title}</h3>
+              <p class="mt-3 text-ink/70 leading-relaxed">{p.tagline}</p>
+            </div>
+
+            <div class="relative mt-8 pt-6 border-t border-ink/10 flex items-center justify-between">
+              <span class="font-display font-semibold text-xl">{p.price}</span>
+              <span class="inline-flex items-center gap-1 px-4 py-2 rounded-full bg-ink text-white text-sm font-medium group-hover:bg-ink/85 transition">
+                View <span aria-hidden="true">›</span>
+              </span>
+            </div>
+          </a>
+        ))}
+      </div>
+
+      <!-- Why buy -->
+      <div class="mt-32 grid md:grid-cols-3 gap-8 text-center">
+        <div class="reveal">
+          <div class="text-4xl font-display font-semibold text-ink">100%</div>
+          <p class="mt-2 text-sm text-ink/70">Money-back if it doesn't deliver. No questions.</p>
+        </div>
+        <div class="reveal">
+          <div class="text-4xl font-display font-semibold text-ink">∞</div>
+          <p class="mt-2 text-sm text-ink/70">Free lifetime updates on digital products.</p>
+        </div>
+        <div class="reveal">
+          <div class="text-4xl font-display font-semibold text-ink">1</div>
+          <p class="mt-2 text-sm text-ink/70">One person making this. You're supporting the work directly.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Base>

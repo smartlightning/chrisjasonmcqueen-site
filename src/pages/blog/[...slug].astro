@@ -1,0 +1,96 @@
+---
+import Base from '../../layouts/Base.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  return posts.map((post) => ({ params: { slug: post.slug }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+
+const fmt = (d: Date) =>
+  d.toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' });
+
+const all = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+const others = all.filter((p) => p.slug !== post.slug).slice(0, 3);
+---
+
+<Base title={`${post.data.title} — Chris Jason McQueen`} description={post.data.description} image={post.data.image}>
+  <Nav />
+
+  <main class="bg-paper pt-24">
+    <article class="max-w-3xl mx-auto px-6 py-16">
+      <a href="/blog" class="text-sm text-muted hover:text-ink reveal">‹ Back to journal</a>
+
+      <header class="mt-8">
+        <p class="text-[11px] uppercase tracking-[0.18em] text-muted reveal">{post.data.category} · {fmt(post.data.pubDate)}</p>
+        <h1 class="h-display text-ink text-4xl md:text-6xl mt-4 reveal">{post.data.title}</h1>
+        <p class="mt-6 text-xl text-ink/70 reveal">{post.data.description}</p>
+      </header>
+
+      {post.data.image && (
+        <div class="relative aspect-[16/9] rounded-2xl overflow-hidden bg-ink/5 mt-12 reveal">
+          <div
+            class="absolute inset-0 bg-cover bg-center will-parallax"
+            data-parallax="0.06"
+            style={`background-image: url('${post.data.image}');`}
+          ></div>
+        </div>
+      )}
+
+      <div class="prose prose-lg prose-neutral max-w-none mt-12 reveal
+        prose-headings:font-display prose-headings:font-semibold prose-headings:tracking-tight
+        prose-h2:mt-12 prose-h2:text-3xl
+        prose-p:text-ink/85 prose-p:leading-relaxed
+        prose-a:text-ink prose-a:underline prose-a:underline-offset-4 hover:prose-a:text-ink/70
+        prose-blockquote:border-l-2 prose-blockquote:border-ink/40 prose-blockquote:not-italic prose-blockquote:text-ink/70
+        prose-strong:text-ink">
+        <Content />
+      </div>
+
+      <hr class="mt-16 border-ink/10" />
+
+      <div class="mt-10 flex flex-wrap gap-4 items-center justify-between reveal">
+        <a href="/blog" class="text-sm text-muted hover:text-ink">‹ All posts</a>
+        <a
+          href="https://youtube.com/@chrisjasonmcqueen?sub_confirmation=1"
+          target="_blank"
+          rel="noopener"
+          class="px-5 py-2.5 rounded-full bg-ink text-white text-sm font-medium hover:bg-ink/85 transition"
+        >
+          Subscribe on YouTube
+        </a>
+      </div>
+    </article>
+
+    {others.length > 0 && (
+      <section class="bg-black text-white py-24">
+        <div class="max-w-6xl mx-auto px-6">
+          <h2 class="h-display text-3xl md:text-4xl text-center reveal">Keep reading</h2>
+          <div class="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {others.map((p) => (
+              <a href={`/blog/${p.slug}`} class="group block reveal">
+                <div class="relative aspect-[4/3] rounded-xl overflow-hidden bg-white/5">
+                  <div
+                    class="absolute inset-0 bg-cover bg-center group-hover:scale-105 transition-transform duration-700"
+                    style={`background-image: url('${p.data.image || '/images/story.svg'}');`}
+                  ></div>
+                </div>
+                <p class="mt-4 text-[11px] uppercase tracking-[0.18em] text-white/50">{p.data.category} · {fmt(p.data.pubDate)}</p>
+                <h3 class="font-display font-medium text-lg mt-2 leading-snug group-hover:text-white/80 transition">{p.data.title}</h3>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+  </main>
+
+  <Footer />
+</Base>
