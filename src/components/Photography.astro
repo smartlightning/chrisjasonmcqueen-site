@@ -1,12 +1,12 @@
 ---
-// Photography portfolio with parallax photo grid
-const photos = [
-  { src: '/images/work-1.svg', alt: 'Wedding ceremony', span: 'md:row-span-2' },
-  { src: '/images/work-2.svg', alt: 'Bride and groom portrait', span: '' },
-  { src: '/images/work-3.svg', alt: 'Project work', span: '' },
-  { src: '/images/work-4.svg', alt: 'Detail shot', span: 'md:row-span-2' },
-  { src: '/images/work-5.svg', alt: 'Candid moment', span: '' },
-  { src: '/images/work-6.svg', alt: 'Reception', span: '' },
+// 6-photo grid. When real photos exist, swap the photo-blank divs for <img>.
+const tiles = [
+  { tone: 'warm', span: 'md:row-span-2' },
+  { tone: 'light', span: '' },
+  { tone: '', span: '' },
+  { tone: 'cool', span: 'md:row-span-2' },
+  { tone: 'warm', span: '' },
+  { tone: 'light', span: '' },
 ];
 ---
 
@@ -24,15 +24,12 @@ const photos = [
     </div>
 
     <div class="grid grid-cols-2 md:grid-cols-3 auto-rows-[28vh] md:auto-rows-[32vh] gap-3 md:gap-4">
-      {photos.map((p, i) => (
-        <figure class={`relative overflow-hidden rounded-xl bg-ink/5 reveal ${p.span}`}>
+      {tiles.map((t, i) => (
+        <figure class={`relative overflow-hidden rounded-xl bg-ink/5 reveal ${t.span}`}>
           <div
-            class="absolute inset-0 will-parallax bg-cover bg-center"
+            class={`absolute inset-0 will-parallax photo-blank ${t.tone}`}
             data-parallax={(0.05 + (i % 3) * 0.04).toFixed(2)}
             data-parallax-scale="1.18"
-            style={`background-image: url('${p.src}');`}
-            role="img"
-            aria-label={p.alt}
           ></div>
         </figure>
       ))}

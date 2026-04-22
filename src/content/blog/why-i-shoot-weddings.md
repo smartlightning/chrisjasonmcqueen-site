@@ -3,7 +3,6 @@ title: "Why I Shoot Weddings (Even Though I'm a YouTuber)"
 description: "People ask me why I still take wedding bookings. Here's the real answer."
 pubDate: 2026-03-28
 category: "Behind the Scenes"
-image: "/images/work-5.svg"
 ---
 
 Every couple of months someone asks: "Now that the channel's growing, are you going to stop shooting weddings?"

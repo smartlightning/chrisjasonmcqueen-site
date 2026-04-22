@@ -3,7 +3,6 @@ title: "Phone Addiction Almost Cost Me My Faith"
 description: "What changed when I treated my phone like the spiritual problem it actually is."
 pubDate: 2026-04-08
 category: "Discipline"
-image: "/images/work-3.svg"
 ---
 
 I used to think phone addiction was a productivity problem. Then I noticed I couldn't sit through a 10-minute prayer without reaching for my pocket. That's when it became a spiritual problem.

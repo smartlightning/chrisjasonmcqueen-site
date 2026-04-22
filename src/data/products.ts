@@ -13,7 +13,6 @@ export interface Product {
   // Format: https://buy.stripe.com/XXXXXXXXXXXX
   buyUrl: string;
   accent: string; // tailwind gradient classes
-  image: string;  // path under /images/shop/
   features: string[];
   faq?: { q: string; a: string }[];
 }
@@ -31,7 +30,6 @@ export const products: Product[] = [
     cta: 'Get the pack',
     buyUrl: 'https://buy.stripe.com/REPLACE_PRESETS_LINK',
     accent: 'from-amber-200 to-rose-300',
-    image: '/images/shop/presets.svg',
     features: [
       '12 signature presets (6 warm, 4 moody, 2 B&W)',
       'Works in Lightroom Classic, CC & Mobile',
@@ -61,7 +59,6 @@ export const products: Product[] = [
     cta: 'Download now',
     buyUrl: 'https://buy.stripe.com/REPLACE_DEVOTIONAL_LINK',
     accent: 'from-sky-200 to-indigo-300',
-    image: '/images/shop/devotional.svg',
     features: [
       '30 days of guided reflections',
       'Print-ready PDF (A4 + US Letter)',
@@ -91,7 +88,6 @@ export const products: Product[] = [
     cta: 'Book a call',
     buyUrl: 'https://cal.com/chrisjasonmcqueen/mentorship',
     accent: 'from-emerald-200 to-teal-300',
-    image: '/images/shop/mentorship.svg',
     features: [
       '60 minutes 1-on-1 over Zoom',
       'Pre-call questionnaire so we don\'t waste time',

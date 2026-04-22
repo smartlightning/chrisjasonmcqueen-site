@@ -27,12 +27,13 @@ const related = products.filter((p) => p.slug !== product.slug);
         <div class="reveal">
           <div class={`relative aspect-square rounded-3xl overflow-hidden bg-gradient-to-br ${product.accent}`}>
             <div
-              class="absolute inset-0 bg-center bg-no-repeat bg-contain p-12 will-parallax"
+              class="absolute inset-0 will-parallax flex items-center justify-center"
               data-parallax="0.06"
-              style={`background-image: url('${product.image}');`}
-              role="img"
-              aria-label={product.title}
-            ></div>
+            >
+              <span class="font-display font-semibold text-white/80 text-3xl tracking-tight drop-shadow-sm text-center px-8">
+                {product.title}
+              </span>
+            </div>
           </div>
         </div>
 

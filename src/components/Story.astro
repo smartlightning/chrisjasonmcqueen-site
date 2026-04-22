@@ -1,19 +1,17 @@
 ---
-// "Pinned" Apple-style section: a sticky frame where text reveals as user scrolls
+// Pinned Apple-style story section. Add /public/images/story.jpg to replace the blank.
 ---
 
 <section id="story" class="pin-section bg-paper">
   <div class="pin-inner">
-    <!-- Background photo with subtle parallax -->
+    <!-- Background with subtle parallax -->
     <div
-      class="absolute inset-0 will-parallax"
+      class="absolute inset-0 will-parallax photo-blank light"
       data-parallax="0.12"
       data-parallax-scale="1.08"
     >
-      <div
-        class="absolute inset-0 bg-cover bg-center opacity-95"
-        style="background-image: linear-gradient(180deg, rgba(251,251,253,0) 0%, rgba(251,251,253,0.6) 100%), url('/images/story.svg');"
-      ></div>
+      <!-- Soft fade to paper at the bottom so text stays readable -->
+      <div class="absolute inset-0" style="background: linear-gradient(180deg, rgba(251,251,253,0) 0%, rgba(251,251,253,0.55) 100%);"></div>
     </div>
 
     <div class="relative z-10 max-w-4xl mx-auto px-6 text-center">

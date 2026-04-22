@@ -1,18 +1,17 @@
 ---
-// Apple-style hero: huge type that scales as you scroll, photo background with parallax
+// Apple-style hero. Renders a styled blank when /images/hero.jpg doesn't exist.
+// To use a real photo: drop hero.jpg into /public/images/ and uncomment the bg-image line.
 ---
 
 <section class="relative h-[110vh] overflow-hidden bg-black text-white parallax-stage">
-  <!-- Background image with parallax -->
+  <!-- Background with parallax -->
   <div
-    class="absolute inset-0 will-parallax"
+    class="absolute inset-0 will-parallax photo-blank warm"
     data-parallax="0.25"
     data-parallax-scale="1.15"
   >
-    <div
-      class="absolute inset-0 bg-cover bg-center"
-      style="background-image: linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.55) 60%, rgba(0,0,0,0.85) 100%), url('/images/hero.svg');"
-    ></div>
+    <!-- Vignette overlay -->
+    <div class="absolute inset-0" style="background: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.45) 60%, rgba(0,0,0,0.85) 100%);"></div>
   </div>
 
   <!-- Foreground content -->

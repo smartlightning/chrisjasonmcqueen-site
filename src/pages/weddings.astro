@@ -4,14 +4,14 @@ import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 
 const photos = [
-  { src: '/images/work-1.svg', alt: 'Wedding ceremony', span: 'md:row-span-2' },
-  { src: '/images/work-2.svg', alt: 'Bride and groom portrait', span: '' },
-  { src: '/images/work-3.svg', alt: 'Bridal party', span: '' },
-  { src: '/images/work-4.svg', alt: 'Detail shot', span: 'md:row-span-2' },
-  { src: '/images/work-5.svg', alt: 'Candid moment', span: '' },
-  { src: '/images/work-6.svg', alt: 'Reception', span: '' },
-  { src: '/images/work-7.svg', alt: 'First dance', span: '' },
-  { src: '/images/work-8.svg', alt: 'Golden hour portrait', span: 'md:row-span-2' },
+  { tone: 'warm', alt: 'Wedding ceremony', span: 'md:row-span-2' },
+  { tone: 'light', alt: 'Bride and groom portrait', span: '' },
+  { tone: '', alt: 'Bridal party', span: '' },
+  { tone: 'cool', alt: 'Detail shot', span: 'md:row-span-2' },
+  { tone: 'warm', alt: 'Candid moment', span: '' },
+  { tone: 'light', alt: 'Reception', span: '' },
+  { tone: 'cool', alt: 'First dance', span: '' },
+  { tone: 'warm', alt: 'Golden hour portrait', span: 'md:row-span-2' },
 ];
 
 const packages = [
@@ -52,11 +52,8 @@ const packages = [
   <main class="bg-paper pt-24">
     <!-- Hero -->
     <section class="relative h-[80vh] overflow-hidden bg-black text-white">
-      <div class="absolute inset-0 will-parallax" data-parallax="0.2" data-parallax-scale="1.12">
-        <div
-          class="absolute inset-0 bg-cover bg-center"
-          style="background-image: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.7) 100%), url('/images/weddings-hero.svg');"
-        ></div>
+      <div class="absolute inset-0 will-parallax photo-blank warm" data-parallax="0.2" data-parallax-scale="1.12">
+        <div class="absolute inset-0" style="background: linear-gradient(180deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.7) 100%);"></div>
       </div>
       <div class="relative h-full flex flex-col items-center justify-center text-center px-6">
         <p class="text-xs uppercase tracking-[0.25em] text-white/70 mb-6 reveal">Weddings & Projects</p>
@@ -73,10 +70,9 @@ const packages = [
         {photos.map((p, i) => (
           <figure class={`relative overflow-hidden rounded-xl bg-ink/5 reveal ${p.span}`}>
             <div
-              class="absolute inset-0 will-parallax bg-cover bg-center"
+              class={`absolute inset-0 will-parallax photo-blank ${p.tone}`}
               data-parallax={(0.04 + (i % 3) * 0.03).toFixed(2)}
               data-parallax-scale="1.15"
-              style={`background-image: url('${p.src}');`}
               role="img"
               aria-label={p.alt}
             ></div>

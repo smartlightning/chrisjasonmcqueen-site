@@ -3,7 +3,6 @@ title: "How to Escape Your Lukewarm Era Before It's Too Late"
 description: "Three steps that pulled me out of lukewarm faith — and how to know if you're stuck there right now."
 pubDate: 2026-04-15
 category: "Discipleship"
-image: "/images/work-1.svg"
 ---
 
 I spent two years lukewarm. Going to church. Posting verses. Telling people I was "in a season." But honestly? I was bored of God, and I was scared to admit it.
