@@ -6,3 +6,8 @@ dist
 !.env.example
 .DS_Store
 .dev.vars
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
