@@ -1,0 +1,17 @@
+# ════════════════════════════════════════════════════════════════
+#  EXAMPLE — for testing the contact form locally with wrangler
+# ════════════════════════════════════════════════════════════════
+#
+# Cloudflare Pages Functions read environment variables from `.dev.vars`
+# (NOT .env) when you run `wrangler pages dev`. Same key=value format.
+#
+# 1. Copy this file to `.dev.vars`
+# 2. Fill in your real RESEND_API_KEY
+# 3. Run:  npm run build && npx wrangler pages dev dist
+# 4. Open http://localhost:8788/contact and test the form
+#
+# `.dev.vars` is gitignored — never commit real keys.
+
+RESEND_API_KEY=re_xxxxxxxxxxxxxxxxxxxxxxxx
+TO_EMAIL=chrisjasonmcqueen@icloud.com
+FROM_EMAIL=onboarding@resend.dev
