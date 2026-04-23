@@ -9,6 +9,7 @@ export interface Product {
   description: string;
   price: string;
   priceNumber: number;
+  originalPrice?: string; // shown struck-through next to `price` when present
   cta: string;
   // Stripe Payment Link URL. Create at https://dashboard.stripe.com/payment-links
   // Format: https://buy.stripe.com/XXXXXXXXXXXX
@@ -49,31 +50,32 @@ export const products: Product[] = [
     ],
   },
   {
-    slug: 'faith-devotional',
-    badge: 'Devotional',
-    title: '30-Day Faith Devotional',
-    tagline: 'One page a day. Real questions, real Scripture.',
+    slug: 'pocket-faith-wallpapers',
+    badge: 'Wallpapers',
+    title: 'Pocket Faith Wallpapers',
+    tagline: 'A quiet anchor, right there in your pocket.',
     description:
-      'A printable PDF devotional drawn from my YouTube series. Each day: a passage, a short reflection, and a question that actually makes you stop. Designed for young adults wrestling with what real faith looks like in 2026.',
-    price: '$12',
-    priceNumber: 12,
+      'I created these wallpapers during a season when I felt spiritually low. Every time I picked up my phone, I was bombarded with news, notifications, and stress. It felt like my phone was pulling me away from God. But I asked myself: what if picking up my phone actually helped me connect with God\'s word? So I began designing wallpapers — with my photography and verses from Scripture — to fill that space with truth, peace, and reminders of God\'s presence.',
+    price: '€8',
+    priceNumber: 8,
+    originalPrice: '€17',
     cta: 'Download now',
-    buyUrl: links.stripe.devotional,
+    buyUrl: links.stripe.wallpapers,
     accent: 'from-sky-200 to-indigo-300',
     features: [
-      '30 days of guided reflections',
-      'Print-ready PDF (A4 + US Letter)',
-      'Companion video for each week',
-      'Journal prompts included',
+      '8 high-resolution, lockscreen-ready wallpapers',
+      'Each features minimalist Scripture and calming visuals',
+      'Designed to help you stay spiritually grounded in the digital world',
+      'Set them as your lock screen, and let every day start with Scripture',
     ],
     faq: [
       {
-        q: 'What translation do you use?',
-        a: 'Mostly ESV, with NIV cross-references where it helps clarity.',
+        q: 'What devices do these work on?',
+        a: 'They\'re sized for modern iPhone and Android lockscreens (1170x2532 and similar). They also look great on most smartphones from the last 5 years.',
       },
       {
-        q: 'Is this for new Christians?',
-        a: 'It\'s for anyone — but especially helpful if you\'re coming back to faith or feeling lukewarm.',
+        q: 'How do I install them?',
+        a: 'Download the ZIP, save the images to your photos, and set one as your lock screen wallpaper. A short install guide is included in the download.',
       },
     ],
   },

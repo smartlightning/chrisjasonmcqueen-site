@@ -1,0 +1,65 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Nav from '../../../components/Nav.astro';
+import Footer from '../../../components/Footer.astro';
+
+// Filename uses an unguessable random suffix so the URL isn't trivially shareable.
+// To rotate: regenerate the suffix, rename the file in public/downloads/, update here.
+const downloadHref = '/downloads/pocket-faith-wallpapers-JQRKYu5FXWJYPUmg.zip';
+const downloadFilename = 'pocket-faith-wallpapers.zip';
+---
+
+<Base
+  title="Thank you — Pocket Faith Wallpapers"
+  description="Your download is ready."
+>
+  <Nav />
+
+  <main class="bg-paper pt-24">
+    <article class="max-w-2xl mx-auto px-6 py-24 text-center">
+      <p class="text-[11px] uppercase tracking-[0.18em] text-muted reveal">Order confirmed</p>
+      <h1 class="h-display text-ink text-4xl md:text-5xl mt-3 reveal">Thank you.</h1>
+      <p class="mt-6 text-xl text-ink/70 reveal">
+        Your copy of <strong>Pocket Faith Wallpapers</strong> is ready to download.
+      </p>
+
+      <div class="mt-12 reveal">
+        <a
+          href={downloadHref}
+          download={downloadFilename}
+          class="inline-block px-8 py-4 rounded-full bg-ink text-white text-base font-medium hover:bg-ink/85 transition"
+        >
+          Download wallpapers (ZIP)
+        </a>
+        <p class="mt-4 text-sm text-muted">
+          If the download doesn't start, right-click the button and choose "Save link as…"
+        </p>
+      </div>
+
+      <div class="mt-20 text-left bg-white rounded-2xl p-8 shadow-sm reveal">
+        <h2 class="font-display font-semibold text-xl text-ink">How to set a wallpaper</h2>
+        <ol class="mt-4 space-y-3 text-ink/80 list-decimal list-inside">
+          <li>Unzip the file — you'll find 8 high-resolution images.</li>
+          <li>Save the ones you love to your phone's photo library.</li>
+          <li>
+            <strong>iPhone:</strong> Settings → Wallpaper → Add New Wallpaper → Photos.<br />
+            <strong>Android:</strong> Long-press the home screen → Wallpapers → choose from gallery.
+          </li>
+          <li>Let Scripture meet you every time you pick up your phone.</li>
+        </ol>
+      </div>
+
+      <p class="mt-16 text-sm text-muted reveal">
+        Save this page — you can return any time to re-download.
+      </p>
+      <p class="mt-2 text-sm text-muted reveal">
+        Trouble with the download? Email me at
+        <a href="mailto:chrisjasonmcqueen@icloud.com" class="underline hover:text-ink">chrisjasonmcqueen@icloud.com</a>.
+      </p>
+
+      <a href="/shop" class="inline-block mt-12 text-sm text-muted hover:text-ink reveal">‹ Back to shop</a>
+    </article>
+  </main>
+
+  <Footer />
+</Base>

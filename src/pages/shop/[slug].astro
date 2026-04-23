@@ -55,7 +55,12 @@ const related = products.filter((p) => p.slug !== product.slug);
           </ul>
 
           <div class="mt-10 flex items-center gap-6 reveal">
-            <span class="font-display font-semibold text-3xl text-ink">{product.price}</span>
+            <div class="flex items-baseline gap-3">
+              <span class="font-display font-semibold text-3xl text-ink">{product.price}</span>
+              {product.originalPrice && (
+                <span class="text-lg text-muted line-through">{product.originalPrice}</span>
+              )}
+            </div>
             <a
               href={product.buyUrl}
               target="_blank"

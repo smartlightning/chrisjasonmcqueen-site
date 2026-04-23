@@ -17,15 +17,15 @@ export const links = {
   // ─── Cal.com booking links ──────────────────────────────────
   // Demo handle is `chrisjasonmcqueen` — change if yours differs.
   cal: {
-    intro: 'https://cal.com/chrisjasonmcqueen/intro',         // free 15-min intro call
-    mentorship: 'https://cal.com/chrisjasonmcqueen/mentorship', // paid 60-min ($120 via Stripe)
+    intro: 'https://cal.eu/chris-jason-mcqueen/free-intro-call',         // free 15-min intro call
+    mentorship: 'https://cal.eu/chris-jason-mcqueen/faith-mentoring', // paid 60-min ($120 via Stripe)
   },
 
   // ─── Stripe Payment Links ───────────────────────────────────
-  // Demo links — replace with the real https://buy.stripe.com/xxxxx once created.
+  // Replace with the real https://buy.stripe.com/xxxxx once created.
   stripe: {
     presets: 'https://buy.stripe.com/test_demo_presets_39',
-    devotional: 'https://buy.stripe.com/test_demo_devotional_12',
+    wallpapers: 'https://buy.stripe.com/3cI7sL2W3bQada97A68N200',
   },
 
   // ─── Newsletter (Buttondown) ────────────────────────────────
