@@ -49,29 +49,17 @@ const categories = ['All', 'Faith', 'Discipline', 'Identity', 'Discipleship'];
         </div>
 
         <div class="relative reveal">
-          <button
-            type="button"
-            id="ytLiteWatch"
-            data-embed={ytEmbed(featured.id) + '&autoplay=1'}
-            aria-label={`Play: ${featured.title}`}
-            class="group relative block aspect-video w-full rounded-2xl overflow-hidden ring-1 ring-white/10 cursor-pointer"
-          >
-            <img
-              src={`https://i.ytimg.com/vi/${featured.id}/maxresdefault.jpg`}
-              alt={featured.title}
+          <div class="aspect-video rounded-2xl overflow-hidden ring-1 ring-white/10">
+            <iframe
+              class="w-full h-full"
+              src={ytEmbed(featured.id)}
+              title={featured.title}
               loading="lazy"
-              class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
-              onerror={`this.onerror=null;this.src='${ytThumb(featured.id)}';`}
-            />
-            <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent"></div>
-            <span class="absolute inset-0 flex items-center justify-center">
-              <span class="flex items-center justify-center w-20 h-20 md:w-24 md:h-24 rounded-full bg-white/95 text-ink shadow-xl group-hover:scale-110 transition-transform">
-                <svg viewBox="0 0 24 24" class="w-8 h-8 md:w-9 md:h-9 ml-1" fill="currentColor" aria-hidden="true">
-                  <path d="M8 5v14l11-7z"></path>
-                </svg>
-              </span>
-            </span>
-          </button>
+              style="border:0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            ></iframe>
+          </div>
         </div>
       </div>
     </section>
@@ -160,25 +148,4 @@ const categories = ['All', 'Faith', 'Discipline', 'Identity', 'Discipleship'];
       });
     });
   });
-
-  // Click-to-play featured video
-  const lite = document.getElementById('ytLiteWatch');
-  if (lite) {
-    lite.addEventListener('click', () => {
-      const embed = (lite as HTMLElement).dataset.embed!;
-      const wrap = document.createElement('div');
-      wrap.className = 'aspect-video rounded-2xl overflow-hidden ring-1 ring-white/10';
-      const iframe = document.createElement('iframe');
-      iframe.src = embed;
-      iframe.title = lite.getAttribute('aria-label') || 'YouTube video';
-      iframe.setAttribute(
-        'allow',
-        'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
-      );
-      iframe.setAttribute('allowfullscreen', '');
-      iframe.style.cssText = 'border:0;width:100%;height:100%;display:block';
-      wrap.appendChild(iframe);
-      lite.replaceWith(wrap);
-    });
-  }
 </script>

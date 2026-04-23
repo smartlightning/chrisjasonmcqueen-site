@@ -10,25 +10,25 @@ export interface Video {
 }
 
 export const featured: Video = {
-  id: 'dSwKGKy0ikw',
-  title: 'YouTube is Destroying Your Faith and Here\'s Why',
-  description:
-    'YouTube and other platforms want you on their feeds — here\'s why a break might be exactly what your faith needs.',
+  id: 'PCMQvtfjZI8',
+  title: 'The Sabbath Secret God Doesn\'t Want You to Miss',
+  description: 'Where does the Sabbath come from, and should we still keep it today?',
   category: 'Faith',
 };
 
 export const videos: Video[] = [
   {
+    id: 'dSwKGKy0ikw',
+    title: 'YouTube is Destroying Your Faith and Here\'s Why',
+    description:
+      'YouTube and other platforms want you on their feeds — here\'s why a break might be exactly what your faith needs.',
+    category: 'Faith',
+  },
+  {
     id: 'rj2FlH1jYlE',
     title: 'Phone Addiction Ruined Me — Here\'s What Changed',
     description: 'Biblical ways to destroy distractions and recover from phone addiction with Jesus.',
     category: 'Discipline',
-  },
-  {
-    id: 'PCMQvtfjZI8',
-    title: 'The Sabbath Secret God Doesn\'t Want You to Miss',
-    description: 'Where does the Sabbath come from, and should we still keep it today?',
-    category: 'Faith',
   },
   {
     id: 'kaYFASGA7yg',
