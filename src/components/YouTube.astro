@@ -1,5 +1,8 @@
 ---
-import { featured, ytEmbed } from '../data/videos';
+import { featured, ytEmbed, ytThumb } from '../data/videos';
+const posterUrl = `https://i.ytimg.com/vi/${featured.id}/maxresdefault.jpg`;
+const fallbackPoster = ytThumb(featured.id);
+const embedUrl = ytEmbed(featured.id) + '&autoplay=1';
 ---
 
 <section id="youtube" class="relative bg-black text-white py-32 md:py-48 overflow-hidden">
@@ -36,21 +39,65 @@ import { featured, ytEmbed } from '../data/videos';
     </div>
 
     <div class="relative reveal">
-      <div
-        class="aspect-video rounded-2xl overflow-hidden ring-1 ring-white/10 will-parallax"
+      <!-- Click-to-play: shows clean poster + custom play button until user clicks. -->
+      <button
+        type="button"
+        id="ytLite"
+        data-embed={embedUrl}
+        aria-label={`Play: ${featured.title}`}
+        class="group relative block aspect-video w-full rounded-2xl overflow-hidden ring-1 ring-white/10 will-parallax cursor-pointer"
         data-parallax="0.08"
       >
-        <iframe
-          class="w-full h-full"
-          src={ytEmbed(featured.id)}
-          title={featured.title}
+        <img
+          src={posterUrl}
+          srcset={`${fallbackPoster} 480w, ${posterUrl} 1280w`}
+          sizes="(min-width: 768px) 50vw, 100vw"
+          alt={featured.title}
           loading="lazy"
-          style="border:0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen
-        ></iframe>
-      </div>
+          class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+          onerror="this.onerror=null;this.src=this.dataset.fallback;"
+          data-fallback={fallbackPoster}
+        />
+        <!-- Subtle vignette so the play button has contrast -->
+        <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent"></div>
+        <!-- Custom play button (no YouTube branding) -->
+        <span class="absolute inset-0 flex items-center justify-center">
+          <span class="flex items-center justify-center w-20 h-20 md:w-24 md:h-24 rounded-full bg-white/95 text-ink shadow-xl group-hover:scale-110 transition-transform">
+            <svg viewBox="0 0 24 24" class="w-8 h-8 md:w-9 md:h-9 ml-1" fill="currentColor" aria-hidden="true">
+              <path d="M8 5v14l11-7z"></path>
+            </svg>
+          </span>
+        </span>
+        <!-- Bottom-left chip mimics video metadata for polish -->
+        <span class="absolute bottom-4 left-4 px-3 py-1 rounded-full bg-black/60 backdrop-blur text-[11px] uppercase tracking-[0.18em] text-white/90">
+          Watch now
+        </span>
+      </button>
       <div class="absolute -inset-6 -z-10 bg-gradient-to-tr from-red-600/20 via-transparent to-white/10 blur-3xl"></div>
     </div>
   </div>
 </section>
+
+<script>
+  // Lazily replace the poster with the actual YouTube iframe on click.
+  // Saves ~500KB on initial page load and gives us a clean preview UI.
+  const lite = document.getElementById('ytLite');
+  if (lite) {
+    lite.addEventListener('click', () => {
+      const embed = (lite as HTMLElement).dataset.embed!;
+      const wrap = document.createElement('div');
+      wrap.className = 'aspect-video rounded-2xl overflow-hidden ring-1 ring-white/10';
+      const iframe = document.createElement('iframe');
+      iframe.src = embed;
+      iframe.title = lite.getAttribute('aria-label') || 'YouTube video';
+      iframe.setAttribute(
+        'allow',
+        'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+      );
+      iframe.setAttribute('allowfullscreen', '');
+      iframe.style.cssText = 'border:0;width:100%;height:100%;display:block';
+      wrap.appendChild(iframe);
+      lite.replaceWith(wrap);
+    });
+  }
+</script>

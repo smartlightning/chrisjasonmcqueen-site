@@ -2,12 +2,12 @@
 import Base from '../../layouts/Base.astro';
 import Nav from '../../components/Nav.astro';
 import Footer from '../../components/Footer.astro';
-import { products } from '../../data/products';
+import { visibleProducts } from '../../data/products';
 ---
 
 <Base
   title="Shop — Chris Jason McQueen"
-  description="Lightroom presets, faith wallpapers, and 1-on-1 mentorship calls."
+  description="Faith wallpapers and 1-on-1 mentorship calls."
 >
   <Nav />
 
@@ -16,19 +16,19 @@ import { products } from '../../data/products';
     <section class="max-w-6xl mx-auto px-6 pt-16 pb-20 text-center">
       <p class="text-xs uppercase tracking-[0.25em] text-muted mb-6 reveal">The Shop</p>
       <h1 class="h-display text-ink text-5xl md:text-7xl reveal">
-        Tools for the<br/>
-        <span class="text-muted">creator & the called.</span>
+        Made with care.<br/>
+        <span class="text-muted">Built to outlast the scroll.</span>
       </h1>
       <p class="mt-6 text-lg text-ink/70 max-w-xl mx-auto reveal">
-        Everything I sell, I actually use. Presets I edit weddings with.
-        Devotionals I read myself. Calls I take seriously.
+        Everything I sell, I actually use. Wallpapers I look at every day.
+        Calls I take seriously. No filler — just the real things that have helped me.
       </p>
     </section>
 
     <!-- Products -->
     <section class="max-w-6xl mx-auto px-6 pb-32">
-      <div class="grid md:grid-cols-3 gap-6">
-        {products.map((p, i) => (
+      <div class={`grid gap-6 ${visibleProducts.length === 1 ? 'md:grid-cols-1 max-w-2xl mx-auto' : visibleProducts.length === 2 ? 'md:grid-cols-2' : 'md:grid-cols-3'}`}>
+        {visibleProducts.map((p, i) => (
           <a
             href={`/shop/${p.slug}`}
             class="group relative rounded-3xl bg-white text-ink p-8 flex flex-col reveal will-parallax overflow-hidden hover:-translate-y-1 transition-transform shadow-sm"
@@ -43,7 +43,12 @@ import { products } from '../../data/products';
             </div>
 
             <div class="relative mt-8 pt-6 border-t border-ink/10 flex items-center justify-between">
-              <span class="font-display font-semibold text-xl">{p.price}</span>
+              <div class="flex items-baseline gap-2">
+                <span class="font-display font-semibold text-xl">{p.price}</span>
+                {p.originalPrice && (
+                  <span class="text-sm text-muted line-through">{p.originalPrice}</span>
+                )}
+              </div>
               <span class="inline-flex items-center gap-1 px-4 py-2 rounded-full bg-ink text-white text-sm font-medium group-hover:bg-ink/85 transition">
                 View <span aria-hidden="true">›</span>
               </span>
@@ -55,8 +60,8 @@ import { products } from '../../data/products';
       <!-- Why buy -->
       <div class="mt-32 grid md:grid-cols-3 gap-8 text-center">
         <div class="reveal">
-          <div class="text-4xl font-display font-semibold text-ink">100%</div>
-          <p class="mt-2 text-sm text-ink/70">Money-back if it doesn't deliver. No questions.</p>
+          <div class="text-4xl font-display font-semibold text-ink">30 days</div>
+          <p class="mt-2 text-sm text-ink/70">Full refund if it doesn't deliver. No forms.</p>
         </div>
         <div class="reveal">
           <div class="text-4xl font-display font-semibold text-ink">∞</div>

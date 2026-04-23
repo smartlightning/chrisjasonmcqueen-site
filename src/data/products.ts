@@ -17,6 +17,9 @@ export interface Product {
   accent: string; // tailwind gradient classes
   features: string[];
   faq?: { q: string; a: string }[];
+  // When true, the product is excluded from listing pages but its detail page
+  // still works (handy for "coming soon" / temporary hides).
+  hidden?: boolean;
 }
 
 export const products: Product[] = [
@@ -32,6 +35,7 @@ export const products: Product[] = [
     cta: 'Get the pack',
     buyUrl: links.stripe.presets,
     accent: 'from-amber-200 to-rose-300',
+    hidden: true, // temporarily hidden from listings
     features: [
       '12 signature presets (6 warm, 4 moody, 2 B&W)',
       'Works in Lightroom Classic, CC & Mobile',
@@ -55,27 +59,36 @@ export const products: Product[] = [
     title: 'Pocket Faith Wallpapers',
     tagline: 'A quiet anchor, right there in your pocket.',
     description:
-      'I created these wallpapers during a season when I felt spiritually low. Every time I picked up my phone, I was bombarded with news, notifications, and stress. It felt like my phone was pulling me away from God. But I asked myself: what if picking up my phone actually helped me connect with God\'s word? So I began designing wallpapers — with my photography and verses from Scripture — to fill that space with truth, peace, and reminders of God\'s presence.',
-    price: '€8',
-    priceNumber: 8,
-    originalPrice: '€17',
-    cta: 'Download now',
+      'I designed these in a season when I felt spiritually low. Every time I picked up my phone — news, notifications, noise. It felt like the device was pulling me away from God. So I asked: what if my phone could pull me toward Him instead? These 8 wallpapers pair my own photography with carefully chosen Scripture so the first thing you see, every time, is truth.',
+    price: '€29',
+    priceNumber: 29,
+    originalPrice: '€49',
+    cta: 'Download instantly',
     buyUrl: links.stripe.wallpapers,
     accent: 'from-sky-200 to-indigo-300',
     features: [
-      '8 high-resolution, lockscreen-ready wallpapers',
-      'Each features minimalist Scripture and calming visuals',
-      'Designed to help you stay spiritually grounded in the digital world',
-      'Set them as your lock screen, and let every day start with Scripture',
+      '8 hand-designed lockscreen wallpapers',
+      'Original photography paired with carefully chosen Scripture',
+      'High-resolution files for iPhone & Android (4K-ready)',
+      'A simple install guide so you\'re set up in 60 seconds',
+      'Free lifetime updates — new wallpapers added each season',
     ],
     faq: [
       {
         q: 'What devices do these work on?',
-        a: 'They\'re sized for modern iPhone and Android lockscreens (1170x2532 and similar). They also look great on most smartphones from the last 5 years.',
+        a: 'Built for modern iPhones (X and newer) and most Android phones from the last 5 years. Each wallpaper ships at 1170×2532 with extra resolution to spare so the image stays crisp on bigger screens too.',
       },
       {
         q: 'How do I install them?',
-        a: 'Download the ZIP, save the images to your photos, and set one as your lock screen wallpaper. A short install guide is included in the download.',
+        a: 'Download the ZIP, save the images to your Photos app, then long-press your lock screen → Customize → Photos. Full install guide is included.',
+      },
+      {
+        q: 'Why €29? Aren\'t wallpapers usually free?',
+        a: 'Free wallpapers come with ads, low resolution, or random clip-art Bible verses. These are made by hand from my own photography — the kind I shoot for weddings and travel — and the verses are chosen to actually sit with you. Every purchase also funds new YouTube videos.',
+      },
+      {
+        q: 'Refund policy?',
+        a: 'If they don\'t hit, email me within 30 days and I\'ll refund you in full — no questions, no forms.',
       },
     ],
   },
@@ -113,3 +126,7 @@ export const products: Product[] = [
 export function getProduct(slug: string): Product | undefined {
   return products.find((p) => p.slug === slug);
 }
+
+// Products shown on listing pages (homepage Shop section, /shop index).
+// Detail pages and direct links still work for hidden ones.
+export const visibleProducts = products.filter((p) => !p.hidden);

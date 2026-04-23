@@ -1,5 +1,5 @@
 ---
-import { products } from '../data/products';
+import { visibleProducts } from '../data/products';
 ---
 
 <section id="shop" class="bg-black text-white py-32 md:py-48 overflow-hidden">
@@ -8,12 +8,12 @@ import { products } from '../data/products';
       <p class="text-xs uppercase tracking-[0.25em] text-white/60 mb-6 reveal">The Shop</p>
       <h2 class="h-display text-5xl md:text-7xl reveal">
         Tools to help you<br/>
-        <span class="text-white/60">create & grow.</span>
+        <span class="text-white/60">walk the walk.</span>
       </h2>
     </div>
 
-    <div class="grid md:grid-cols-3 gap-6">
-      {products.map((p, i) => (
+    <div class={`grid gap-6 ${visibleProducts.length === 1 ? 'md:grid-cols-1 max-w-2xl mx-auto' : visibleProducts.length === 2 ? 'md:grid-cols-2' : 'md:grid-cols-3'}`}>
+      {visibleProducts.map((p, i) => (
         <a
           href={`/shop/${p.slug}`}
           class="group relative rounded-3xl bg-white text-ink p-8 flex flex-col reveal will-parallax overflow-hidden hover:-translate-y-1 transition-transform"
@@ -28,7 +28,12 @@ import { products } from '../data/products';
           </div>
 
           <div class="relative mt-8 pt-6 border-t border-ink/10 flex items-center justify-between">
-            <span class="font-display font-semibold text-xl">{p.price}</span>
+            <div class="flex items-baseline gap-2">
+              <span class="font-display font-semibold text-xl">{p.price}</span>
+              {p.originalPrice && (
+                <span class="text-sm text-muted line-through">{p.originalPrice}</span>
+              )}
+            </div>
             <span class="inline-flex items-center gap-1 px-4 py-2 rounded-full bg-ink text-white text-sm font-medium group-hover:bg-ink/85 transition">
               Learn more <span aria-hidden="true">›</span>
             </span>

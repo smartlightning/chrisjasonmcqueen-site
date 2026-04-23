@@ -9,7 +9,27 @@ export function getStaticPaths() {
 }
 
 const { product } = Astro.props;
-const related = products.filter((p) => p.slug !== product.slug);
+const related = products.filter((p) => p.slug !== product.slug && !p.hidden);
+
+// Calculate discount percentage if there's an originalPrice
+const discountPct = (() => {
+  if (!product.originalPrice) return null;
+  const orig = parseFloat(product.originalPrice.replace(/[^0-9.]/g, ''));
+  const now = product.priceNumber;
+  if (!orig || orig <= now) return null;
+  return Math.round(((orig - now) / orig) * 100);
+})();
+
+// Optional product gallery — drop images here and they'll show up in the hero stack:
+//   public/images/products/<slug>/1.jpg, 2.jpg, 3.jpg
+// (No build error if missing; the hero falls back to the gradient mockup.)
+const galleryBase = `/images/products/${product.slug}`;
+const galleryImages = [1, 2, 3].map((n) => `${galleryBase}/${n}.jpg`);
+
+// Special hero treatment for wallpapers product — three floating phone mockups
+const isWallpapers = product.slug === 'pocket-faith-wallpapers';
+
+// Bullet checklist icons get a brighter accent so the value stack pops
 ---
 
 <Base
@@ -19,101 +39,368 @@ const related = products.filter((p) => p.slug !== product.slug);
   <Nav />
 
   <main class="bg-paper pt-24">
-    <article class="max-w-6xl mx-auto px-6 py-20">
-      <a href="/shop" class="text-sm text-muted hover:text-ink reveal">‹ Back to shop</a>
+    <!-- ─────────────────────── HERO ─────────────────────── -->
+    <section class="relative overflow-hidden">
+      <!-- Soft accent glow behind hero -->
+      <div class={`absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[900px] rounded-full bg-gradient-to-br ${product.accent} opacity-30 blur-3xl pointer-events-none`}></div>
 
-      <div class="grid md:grid-cols-2 gap-12 lg:gap-20 mt-8">
-        <!-- Visual -->
-        <div class="reveal">
-          <div class={`relative aspect-square rounded-3xl overflow-hidden bg-gradient-to-br ${product.accent}`}>
-            <div
-              class="absolute inset-0 will-parallax flex items-center justify-center"
-              data-parallax="0.06"
-            >
-              <span class="font-display font-semibold text-white/80 text-3xl tracking-tight drop-shadow-sm text-center px-8">
-                {product.title}
+      <div class="relative max-w-6xl mx-auto px-6 pt-12 pb-20">
+        <a href="/shop" class="text-sm text-muted hover:text-ink reveal">‹ Back to shop</a>
+
+        <div class="grid md:grid-cols-2 gap-12 lg:gap-20 mt-8 items-center">
+          <!-- Left: Visual -->
+          <div class="reveal order-1 md:order-1">
+            {isWallpapers ? (
+              <!-- Three floating phone mockups -->
+              <div class="relative aspect-[4/5] flex items-center justify-center">
+                <!-- Back phone (left, tilted) -->
+                <div class="absolute left-0 top-12 w-40 md:w-48 rotate-[-8deg] will-parallax" data-parallax="0.05">
+                  <div class={`relative aspect-[9/19] rounded-[2rem] overflow-hidden bg-gradient-to-br ${product.accent} ring-8 ring-ink/90 shadow-2xl`}>
+                    <img
+                      src={`${galleryBase}/2.jpg`}
+                      alt=""
+                      onerror="this.style.display='none'"
+                      class="absolute inset-0 w-full h-full object-cover"
+                    />
+                    <div class="absolute top-3 left-1/2 -translate-x-1/2 w-16 h-4 rounded-full bg-ink/80"></div>
+                  </div>
+                </div>
+
+                <!-- Back phone (right, tilted) -->
+                <div class="absolute right-0 top-16 w-40 md:w-48 rotate-[10deg] will-parallax" data-parallax="0.07">
+                  <div class={`relative aspect-[9/19] rounded-[2rem] overflow-hidden bg-gradient-to-br ${product.accent} ring-8 ring-ink/90 shadow-2xl`}>
+                    <img
+                      src={`${galleryBase}/3.jpg`}
+                      alt=""
+                      onerror="this.style.display='none'"
+                      class="absolute inset-0 w-full h-full object-cover"
+                    />
+                    <div class="absolute top-3 left-1/2 -translate-x-1/2 w-16 h-4 rounded-full bg-ink/80"></div>
+                  </div>
+                </div>
+
+                <!-- Front phone (centered, no tilt) -->
+                <div class="relative w-48 md:w-56 will-parallax z-10" data-parallax="0.03">
+                  <div class={`relative aspect-[9/19] rounded-[2.25rem] overflow-hidden bg-gradient-to-br ${product.accent} ring-[10px] ring-ink/90 shadow-2xl`}>
+                    <img
+                      src={`${galleryBase}/1.jpg`}
+                      alt={`${product.title} preview`}
+                      onerror="this.style.display='none'"
+                      class="absolute inset-0 w-full h-full object-cover"
+                    />
+                    <!-- Notch -->
+                    <div class="absolute top-3 left-1/2 -translate-x-1/2 w-20 h-5 rounded-full bg-ink/90"></div>
+                    <!-- Lockscreen text overlay (only visible if no gallery image yet) -->
+                    <div class="absolute inset-0 flex flex-col items-center justify-center text-white/90 text-center px-3">
+                      <p class="text-[11px] uppercase tracking-[0.18em] opacity-70">9:41</p>
+                      <p class="font-display text-2xl mt-1">Be still</p>
+                      <p class="text-[11px] mt-2 opacity-80 italic">Psalm 46:10</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div class={`relative aspect-square rounded-3xl overflow-hidden bg-gradient-to-br ${product.accent}`}>
+                <div
+                  class="absolute inset-0 will-parallax flex items-center justify-center"
+                  data-parallax="0.06"
+                >
+                  <span class="font-display font-semibold text-white/80 text-3xl tracking-tight drop-shadow-sm text-center px-8">
+                    {product.title}
+                  </span>
+                </div>
+              </div>
+            )}
+          </div>
+
+          <!-- Right: Pitch -->
+          <div class="flex flex-col order-2 md:order-2">
+            <div class="flex items-center gap-3 reveal">
+              <span class="text-[11px] uppercase tracking-[0.18em] text-muted">{product.badge}</span>
+              {discountPct && (
+                <span class="text-[11px] uppercase tracking-[0.18em] px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 font-semibold">
+                  Launch sale · {discountPct}% off
+                </span>
+              )}
+            </div>
+
+            <h1 class="h-display text-ink text-4xl md:text-5xl mt-3 reveal">{product.title}</h1>
+            <p class="mt-4 text-xl text-ink/70 reveal">{product.tagline}</p>
+
+            <p class="mt-6 text-ink/80 leading-relaxed reveal">{product.description}</p>
+
+            <!-- Value stack -->
+            <ul class="mt-8 space-y-3 reveal">
+              {product.features.map((f) => (
+                <li class="flex items-start gap-3 text-ink/85">
+                  <svg class="mt-0.5 w-5 h-5 shrink-0 text-emerald-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path fill-rule="evenodd" d="M16.704 5.29a1 1 0 010 1.42l-7.5 7.5a1 1 0 01-1.42 0l-3.5-3.5a1 1 0 011.42-1.42l2.79 2.79 6.79-6.79a1 1 0 011.42 0z" clip-rule="evenodd"/>
+                  </svg>
+                  <span>{f}</span>
+                </li>
+              ))}
+            </ul>
+
+            <!-- Price + CTA -->
+            <div class="mt-10 flex flex-col sm:flex-row sm:items-center gap-5 reveal">
+              <div class="flex items-baseline gap-3">
+                <span class="font-display font-semibold text-4xl text-ink">{product.price}</span>
+                {product.originalPrice && (
+                  <span class="text-xl text-muted line-through">{product.originalPrice}</span>
+                )}
+              </div>
+              <a
+                href={product.buyUrl}
+                target="_blank"
+                rel="noopener"
+                class="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-ink text-white text-base font-medium hover:bg-ink/85 transition shadow-lg shadow-ink/10"
+              >
+                {product.cta}
+                <span aria-hidden="true">›</span>
+              </a>
+            </div>
+
+            <!-- Trust line -->
+            <div class="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-muted reveal">
+              <span class="inline-flex items-center gap-1.5">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 1a4 4 0 00-4 4v3H5a2 2 0 00-2 2v7a2 2 0 002 2h10a2 2 0 002-2v-7a2 2 0 00-2-2h-1V5a4 4 0 00-4-4zm2 7H8V5a2 2 0 014 0v3z"/></svg>
+                Secure Stripe checkout
+              </span>
+              <span class="inline-flex items-center gap-1.5">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M3 4a2 2 0 012-2h10a2 2 0 012 2v12a2 2 0 01-2 2H5a2 2 0 01-2-2V4zm5 9.586l5.293-5.293a1 1 0 011.414 1.414l-6 6a1 1 0 01-1.414 0l-3-3a1 1 0 111.414-1.414L8 13.586z"/></svg>
+                Instant download
+              </span>
+              <span class="inline-flex items-center gap-1.5">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm.75 4a.75.75 0 00-1.5 0v4c0 .2.08.39.22.53l2.5 2.5a.75.75 0 101.06-1.06l-2.28-2.28V6z"/></svg>
+                30-day money-back
               </span>
             </div>
           </div>
         </div>
-
-        <!-- Details -->
-        <div class="flex flex-col">
-          <span class="text-[11px] uppercase tracking-[0.18em] text-muted reveal">{product.badge}</span>
-          <h1 class="h-display text-ink text-4xl md:text-5xl mt-3 reveal">{product.title}</h1>
-          <p class="mt-4 text-xl text-ink/70 reveal">{product.tagline}</p>
-
-          <p class="mt-6 text-ink/80 leading-relaxed reveal">{product.description}</p>
-
-          <ul class="mt-8 space-y-2 reveal">
-            {product.features.map((f) => (
-              <li class="flex items-start gap-3 text-ink/80">
-                <span class="mt-2 w-1.5 h-1.5 rounded-full bg-ink/60 shrink-0"></span>
-                <span>{f}</span>
-              </li>
-            ))}
-          </ul>
-
-          <div class="mt-10 flex items-center gap-6 reveal">
-            <div class="flex items-baseline gap-3">
-              <span class="font-display font-semibold text-3xl text-ink">{product.price}</span>
-              {product.originalPrice && (
-                <span class="text-lg text-muted line-through">{product.originalPrice}</span>
-              )}
-            </div>
-            <a
-              href={product.buyUrl}
-              target="_blank"
-              rel="noopener"
-              class="px-7 py-3 rounded-full bg-ink text-white text-sm font-medium hover:bg-ink/85 transition"
-            >
-              {product.cta}
-            </a>
-          </div>
-          <p class="mt-3 text-xs text-muted reveal">Secure checkout · Instant delivery</p>
-        </div>
       </div>
+    </section>
 
-      <!-- FAQ -->
-      {product.faq && product.faq.length > 0 && (
-        <section class="mt-32 max-w-2xl mx-auto">
+    {isWallpapers && (
+      <!-- ─────────────────────── PROBLEM / PROMISE ─────────────────────── -->
+      <section class="bg-white py-24 md:py-32">
+        <div class="max-w-3xl mx-auto px-6 text-center">
+          <p class="text-[11px] uppercase tracking-[0.25em] text-muted reveal">A small change. A daily reminder.</p>
+          <h2 class="h-display text-ink text-3xl md:text-5xl mt-4 reveal">
+            Your phone is the first thing you see each day.
+          </h2>
+          <p class="mt-6 text-lg text-ink/70 leading-relaxed reveal">
+            For most of us it's notifications. News. Noise. We pick it up <em>96 times a day</em>
+            on average — and almost none of those moments point us toward God.
+          </p>
+          <p class="mt-4 text-lg text-ink/70 leading-relaxed reveal">
+            What if every glance became a small invitation back to truth?
+          </p>
+        </div>
+
+        <!-- Three pillars -->
+        <div class="max-w-5xl mx-auto px-6 mt-20 grid md:grid-cols-3 gap-8">
+          <div class="reveal text-center">
+            <div class="w-12 h-12 mx-auto rounded-full bg-sky-100 text-sky-700 flex items-center justify-center">
+              <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5l-4-4 1.41-1.41L11 13.67l5.59-5.59L18 9.5l-7 7z"/></svg>
+            </div>
+            <h3 class="mt-5 font-display font-semibold text-xl text-ink">Original photography</h3>
+            <p class="mt-2 text-ink/70 leading-relaxed">
+              Every wallpaper is shot by me — landscapes, light, stillness — not stock or AI.
+            </p>
+          </div>
+          <div class="reveal text-center">
+            <div class="w-12 h-12 mx-auto rounded-full bg-amber-100 text-amber-700 flex items-center justify-center">
+              <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor"><path d="M19 2H5c-1.1 0-2 .9-2 2v18l4-4h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-6 14h-2v-2h2v2zm0-4h-2V6h2v6z"/></svg>
+            </div>
+            <h3 class="mt-5 font-display font-semibold text-xl text-ink">Verses that actually sit</h3>
+            <p class="mt-2 text-ink/70 leading-relaxed">
+              Hand-picked Scripture for the seasons we all walk through — peace, rest, hope, identity.
+            </p>
+          </div>
+          <div class="reveal text-center">
+            <div class="w-12 h-12 mx-auto rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center">
+              <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/></svg>
+            </div>
+            <h3 class="mt-5 font-display font-semibold text-xl text-ink">Built for your phone</h3>
+            <p class="mt-2 text-ink/70 leading-relaxed">
+              4K-ready files that look crisp on any modern iPhone or Android. Install in 60 seconds.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ─────────────────────── FOUNDER STORY ─────────────────────── -->
+      <section class="bg-paper py-24 md:py-32">
+        <div class="max-w-3xl mx-auto px-6">
+          <p class="text-[11px] uppercase tracking-[0.25em] text-muted reveal text-center">Why I made these</p>
+          <blockquote class="mt-8 reveal">
+            <p class="font-display text-ink text-2xl md:text-3xl leading-snug text-center">
+              "I designed the first one for myself, in a season when I felt
+              spiritually low. Now they sit in the pockets of believers in
+              over a dozen countries. That still wrecks me."
+            </p>
+            <footer class="mt-8 flex items-center justify-center gap-3 text-ink/70">
+              <div class="w-10 h-10 rounded-full bg-gradient-to-br from-amber-200 to-rose-300"></div>
+              <div class="text-left text-sm">
+                <p class="font-medium text-ink">Chris Jason McQueen</p>
+                <p class="text-muted">Photographer · YouTube creator</p>
+              </div>
+            </footer>
+          </blockquote>
+        </div>
+      </section>
+
+      <!-- ─────────────────────── WHAT'S INCLUDED ─────────────────────── -->
+      <section class="bg-white py-24 md:py-32">
+        <div class="max-w-4xl mx-auto px-6">
+          <div class="text-center">
+            <p class="text-[11px] uppercase tracking-[0.25em] text-muted reveal">Inside the pack</p>
+            <h2 class="h-display text-ink text-3xl md:text-5xl mt-4 reveal">8 wallpapers. €29. No catch.</h2>
+          </div>
+
+          <div class="mt-16 grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {[1,2,3,4,5,6,7,8].map((n) => (
+              <div class="reveal">
+                <div class={`relative aspect-[9/19] rounded-2xl overflow-hidden bg-gradient-to-br ${product.accent} ring-1 ring-ink/5 shadow-md`}>
+                  <img
+                    src={`${galleryBase}/${n}.jpg`}
+                    alt={`Wallpaper ${n}`}
+                    loading="lazy"
+                    onerror="this.style.display='none'"
+                    class="absolute inset-0 w-full h-full object-cover"
+                  />
+                  <span class="absolute bottom-3 left-3 text-[10px] uppercase tracking-[0.15em] px-2 py-1 rounded-full bg-black/30 backdrop-blur text-white/90">
+                    {n.toString().padStart(2,'0')}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <p class="mt-12 text-center text-ink/70 reveal">
+            Free lifetime updates — every new wallpaper I add lands in your library at no extra cost.
+          </p>
+        </div>
+      </section>
+    )}
+
+    <!-- ─────────────────────── FAQ ─────────────────────── -->
+    {product.faq && product.faq.length > 0 && (
+      <section class="bg-paper py-24 md:py-32">
+        <div class="max-w-2xl mx-auto px-6">
           <h2 class="h-display text-ink text-3xl md:text-4xl text-center reveal">Questions?</h2>
           <div class="mt-10 divide-y divide-ink/10 border-y border-ink/10">
             {product.faq.map((item) => (
               <details class="group py-5 reveal">
-                <summary class="flex cursor-pointer items-center justify-between text-left text-ink font-medium">
+                <summary class="flex cursor-pointer items-center justify-between text-left text-ink font-medium gap-4">
                   <span>{item.q}</span>
-                  <span class="text-muted group-open:rotate-45 transition-transform text-2xl leading-none">+</span>
+                  <span class="text-muted group-open:rotate-45 transition-transform text-2xl leading-none shrink-0">+</span>
                 </summary>
                 <p class="mt-3 text-ink/70 leading-relaxed">{item.a}</p>
               </details>
             ))}
           </div>
-        </section>
-      )}
-
-      <!-- Related -->
-      <section class="mt-32">
-        <h2 class="h-display text-ink text-3xl md:text-4xl text-center reveal">Also in the shop</h2>
-        <div class="mt-10 grid md:grid-cols-2 gap-6">
-          {related.map((p) => (
-            <a
-              href={`/shop/${p.slug}`}
-              class="group relative rounded-2xl bg-white text-ink p-6 flex items-center gap-5 reveal overflow-hidden hover:-translate-y-0.5 transition-transform shadow-sm"
-            >
-              <div class={`relative w-20 h-20 rounded-xl overflow-hidden bg-gradient-to-br ${p.accent} shrink-0`}></div>
-              <div class="flex-1">
-                <p class="text-[11px] uppercase tracking-[0.18em] text-muted">{p.badge}</p>
-                <h3 class="font-display font-semibold text-lg mt-1">{p.title}</h3>
-                <p class="text-sm text-ink/60 mt-1">{p.price}</p>
-              </div>
-              <span class="text-muted group-hover:text-ink transition" aria-hidden="true">›</span>
-            </a>
-          ))}
         </div>
       </section>
-    </article>
+    )}
+
+    <!-- ─────────────────────── FINAL CTA ─────────────────────── -->
+    <section class="bg-ink text-white py-24 md:py-32 relative overflow-hidden">
+      <div class={`absolute -top-40 -right-40 w-[600px] h-[600px] rounded-full bg-gradient-to-br ${product.accent} opacity-20 blur-3xl pointer-events-none`}></div>
+
+      <div class="relative max-w-3xl mx-auto px-6 text-center">
+        <h2 class="h-display text-3xl md:text-5xl reveal">
+          Let every glance start with Scripture.
+        </h2>
+        <p class="mt-6 text-lg text-white/70 reveal">
+          Download instantly. Set them in under a minute. Be reminded all day long.
+        </p>
+        <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 reveal">
+          <a
+            href={product.buyUrl}
+            target="_blank"
+            rel="noopener"
+            class="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white text-ink text-base font-medium hover:bg-white/90 transition shadow-xl"
+          >
+            Get {product.title} — {product.price}
+            {product.originalPrice && (
+              <span class="text-sm text-ink/40 line-through ml-1">{product.originalPrice}</span>
+            )}
+          </a>
+        </div>
+        <p class="mt-5 text-xs text-white/50 reveal">
+          30-day money-back guarantee · Secure Stripe checkout · Instant download
+        </p>
+      </div>
+    </section>
+
+    {related.length > 0 && (
+      <!-- ─────────────────────── RELATED ─────────────────────── -->
+      <section class="bg-paper py-24">
+        <div class="max-w-6xl mx-auto px-6">
+          <h2 class="h-display text-ink text-2xl md:text-3xl text-center reveal">Also in the shop</h2>
+          <div class="mt-10 grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+            {related.map((p) => (
+              <a
+                href={`/shop/${p.slug}`}
+                class="group relative rounded-2xl bg-white text-ink p-6 flex items-center gap-5 reveal overflow-hidden hover:-translate-y-0.5 transition-transform shadow-sm"
+              >
+                <div class={`relative w-20 h-20 rounded-xl overflow-hidden bg-gradient-to-br ${p.accent} shrink-0`}></div>
+                <div class="flex-1">
+                  <p class="text-[11px] uppercase tracking-[0.18em] text-muted">{p.badge}</p>
+                  <h3 class="font-display font-semibold text-lg mt-1">{p.title}</h3>
+                  <p class="text-sm text-ink/60 mt-1">{p.price}</p>
+                </div>
+                <span class="text-muted group-hover:text-ink transition" aria-hidden="true">›</span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
   </main>
+
+  <!-- ─────────────────────── STICKY MOBILE BUY BAR ─────────────────────── -->
+  <div
+    id="stickyBuy"
+    class="fixed bottom-0 inset-x-0 z-40 md:hidden bg-white/95 backdrop-blur border-t border-ink/10 px-4 py-3 flex items-center justify-between gap-3 translate-y-full transition-transform duration-300 shadow-2xl"
+  >
+    <div class="flex flex-col">
+      <span class="text-[10px] uppercase tracking-[0.18em] text-muted">{product.badge}</span>
+      <div class="flex items-baseline gap-2">
+        <span class="font-display font-semibold text-lg text-ink">{product.price}</span>
+        {product.originalPrice && (
+          <span class="text-xs text-muted line-through">{product.originalPrice}</span>
+        )}
+      </div>
+    </div>
+    <a
+      href={product.buyUrl}
+      target="_blank"
+      rel="noopener"
+      class="px-5 py-3 rounded-full bg-ink text-white text-sm font-medium hover:bg-ink/85 transition"
+    >
+      {product.cta}
+    </a>
+  </div>
 
   <Footer />
 </Base>
+
+<script>
+  // Show sticky mobile buy bar after the user scrolls past the hero CTA.
+  const bar = document.getElementById('stickyBuy');
+  if (bar) {
+    let shown = false;
+    const onScroll = () => {
+      const y = window.scrollY;
+      const should = y > 600;
+      if (should !== shown) {
+        shown = should;
+        bar.style.transform = shown ? 'translateY(0)' : 'translateY(100%)';
+      }
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+</script>
