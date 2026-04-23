@@ -1,0 +1,4 @@
+# Local secrets for `wrangler dev` — copy to `.dev.vars` and fill in.
+# Get these from your GitHub OAuth App: https://github.com/settings/developers
+OAUTH_CLIENT_ID=Ov23liPrISTMBk57mtbf
+OAUTH_CLIENT_SECRET=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx

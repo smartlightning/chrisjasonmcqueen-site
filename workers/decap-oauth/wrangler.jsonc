@@ -1,0 +1,19 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "decap-oauth",
+  "main": "src/index.js",
+  "compatibility_date": "2026-04-22",
+  "observability": {
+    "enabled": true
+  },
+  "vars": {
+    // GitHub OAuth App client ID (public; not a secret).
+    "OAUTH_CLIENT_ID": "Ov23liPrISTMBk57mtbf",
+    // Comma-separated list of allowed origins that the popup may be opened from.
+    // postMessage() will use the first matching origin as its target.
+    "ALLOWED_ORIGINS": "https://chrisjasonmcqueen.com,https://www.chrisjasonmcqueen.com,http://localhost:4321,http://localhost:8788"
+  }
+  // Secrets (set via `wrangler secret put` or the dashboard):
+  //   OAUTH_CLIENT_SECRET
+  //
+}
