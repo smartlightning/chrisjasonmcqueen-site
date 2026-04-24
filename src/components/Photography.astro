@@ -1,12 +1,12 @@
 ---
-// 6-photo grid. When real photos exist, swap the photo-blank divs for <img>.
+// 6-photo grid using /public/images/work-1..6.jpg
 const tiles = [
-  { tone: 'warm', span: 'md:row-span-2' },
-  { tone: 'light', span: '' },
-  { tone: '', span: '' },
-  { tone: 'cool', span: 'md:row-span-2' },
-  { tone: 'warm', span: '' },
-  { tone: 'light', span: '' },
+  { src: '/images/work-1.jpg', span: 'md:row-span-2' },
+  { src: '/images/work-2.jpg', span: '' },
+  { src: '/images/work-3.jpg', span: '' },
+  { src: '/images/work-4.jpg', span: 'md:row-span-2' },
+  { src: '/images/work-5.jpg', span: '' },
+  { src: '/images/work-6.jpg', span: '' },
 ];
 ---
 
@@ -27,7 +27,8 @@ const tiles = [
       {tiles.map((t, i) => (
         <figure class={`relative overflow-hidden rounded-xl bg-ink/5 reveal ${t.span}`}>
           <div
-            class={`absolute inset-0 will-parallax photo-blank ${t.tone}`}
+            class="absolute inset-0 will-parallax bg-cover bg-center"
+            style={`background-image: url('${t.src}');`}
             data-parallax={(0.05 + (i % 3) * 0.04).toFixed(2)}
             data-parallax-scale="1.18"
           ></div>

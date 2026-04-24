@@ -6,3 +6,7 @@ dist
 !.env.example
 .DS_Store
 .dev.vars
+
+# Raw photo originals — keep locally, don't ship to git/cloudflare.
+# Only the optimized derivatives (hero.jpg, work-*.jpg, etc.) get committed.
+public/images/_originals/
