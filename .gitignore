@@ -10,3 +10,11 @@ dist
 # Raw photo originals — keep locally, don't ship to git/cloudflare.
 # Only the optimized derivatives (hero.jpg, work-*.jpg, etc.) get committed.
 public/images/_originals/
+
+# Large binary product downloads — hosted on Cloudflare R2 instead of in-repo.
+# (R2 has no per-file size limit; Cloudflare Pages caps assets at 25 MB.)
+private-assets/
+public/downloads/*.zip
+
+# Local wrangler dev state (R2/KV simulators, cache)
+.wrangler/

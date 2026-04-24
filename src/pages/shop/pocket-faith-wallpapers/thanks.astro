@@ -3,9 +3,10 @@ import Base from '../../../layouts/Base.astro';
 import Nav from '../../../components/Nav.astro';
 import Footer from '../../../components/Footer.astro';
 
+// Hosted on Cloudflare R2 (free egress, no per-file size limit).
 // Filename uses an unguessable random suffix so the URL isn't trivially shareable.
-// To rotate: regenerate the suffix, rename the file in public/downloads/, update here.
-const downloadHref = '/downloads/pocket-faith-wallpapers-JQRKYu5FXWJYPUmg.zip';
+// To rotate: regenerate the suffix, re-upload to R2 with new key, update here.
+const downloadHref = 'https://pub-80a8c54748a44c06a225ba79c0319f60.r2.dev/pocket-faith-wallpapers-JQRKYu5FXWJYPUmg.zip';
 const downloadFilename = 'pocket-faith-wallpapers.zip';
 ---
 
