@@ -4,13 +4,30 @@
   "scss.lint.unknownAtRules": "ignore",
   "less.lint.unknownAtRules": "ignore",
   "css.customData": [".vscode/css-custom-data.json"],
+
+  "// Astro template literals in style=\"...\"": "VSCode's embedded CSS parser sees `${expr}` and panics with css-rcurlyexpected / property-value-expected. These attributes are validated by Astro/TS — turn the embedded CSS validator off so we don't get false positives.",
+  "css.validate": true,
+  "html.validate.styles": false,
+  "html.validate.scripts": false,
+  "astro.format.indentFrontmatter": true,
+  "[astro]": {
+    "editor.defaultFormatter": "astro-build.astro-vscode"
+  },
+
   "files.associations": {
     "*.css": "tailwindcss"
   },
   "tailwindCSS.includeLanguages": {
     "astro": "html"
   },
+  "tailwindCSS.experimental.classRegex": [
+    ["class:list=\\{([^}]*)\\}", "[\"'`]([^\"'`]*).*?[\"'`]"]
+  ],
   "editor.quickSuggestions": {
     "strings": true
-  }
+  },
+
+  "// Disable noisy validators that don't understand .astro embedded expressions": "",
+  "stylelint.enable": false,
+  "css.styleSheets": []
 }

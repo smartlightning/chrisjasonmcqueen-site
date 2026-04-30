@@ -76,7 +76,7 @@ const packages = [
           <figure class={`relative overflow-hidden rounded-xl bg-ink/5 reveal ${p.span}`}>
             <div
               class="absolute inset-0 will-parallax bg-cover bg-center"
-              style={`background-image: url('${p.src}');`}
+              style={{ backgroundImage: `url('${p.src}')` }}
               data-parallax={(0.04 + (i % 3) * 0.03).toFixed(2)}
               data-parallax-scale="1.15"
               role="img"

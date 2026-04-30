@@ -42,7 +42,7 @@ const others = all.filter((p: Post) => p.slug !== post.slug).slice(0, 3);
           <div
             class="absolute inset-0 bg-cover bg-center will-parallax"
             data-parallax="0.06"
-            style={`background-image: url('${post.data.image}');`}
+            style={{ backgroundImage: `url('${post.data.image}')` }}
           ></div>
         </div>
       )}
@@ -86,7 +86,7 @@ const others = all.filter((p: Post) => p.slug !== post.slug).slice(0, 3);
                     {p.data.image ? (
                       <div
                         class="absolute inset-0 bg-cover bg-center group-hover:scale-105 transition-transform duration-700"
-                        style={`background-image: url('${p.data.image}');`}
+                        style={{ backgroundImage: `url('${p.data.image}')` }}
                       ></div>
                     ) : (
                       <div class={`absolute inset-0 photo-blank ${tone} group-hover:scale-105 transition-transform duration-700`}></div>

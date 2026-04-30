@@ -41,7 +41,7 @@ const fmt = (d: Date) =>
                 <div
                   class="absolute inset-0 bg-cover bg-center will-parallax group-hover:scale-105 transition-transform duration-700"
                   data-parallax="0.06"
-                  style={`background-image: url('${featured.data.image}');`}
+                  style={{ backgroundImage: `url('${featured.data.image}')` }}
                 ></div>
               ) : (
                 <div class="absolute inset-0 photo-blank warm will-parallax group-hover:scale-105 transition-transform duration-700" data-parallax="0.06"></div>
@@ -71,7 +71,7 @@ const fmt = (d: Date) =>
                 {p.data.image ? (
                   <div
                     class="absolute inset-0 bg-cover bg-center group-hover:scale-105 transition-transform duration-700"
-                    style={`background-image: url('${p.data.image}');`}
+                    style={{ backgroundImage: `url('${p.data.image}')` }}
                   ></div>
                 ) : (
                   <div class={`absolute inset-0 photo-blank ${tone} group-hover:scale-105 transition-transform duration-700`}></div>
