@@ -108,6 +108,19 @@ import Footer from '../components/Footer.astro';
   const status = document.getElementById('formStatus') as HTMLElement;
   const btn = document.getElementById('submitBtn') as HTMLButtonElement;
 
+  // Preselect topic from ?topic= query param (e.g. /contact?topic=wedding)
+  const topicSelect = document.getElementById('topic') as HTMLSelectElement | null;
+  if (topicSelect) {
+    const params = new URLSearchParams(window.location.search);
+    const topic = params.get('topic')?.toLowerCase();
+    if (topic) {
+      const match = Array.from(topicSelect.options).find((o) =>
+        o.text.toLowerCase().includes(topic)
+      );
+      if (match) topicSelect.value = match.value;
+    }
+  }
+
   form?.addEventListener('submit', async (e) => {
     e.preventDefault();
     status.textContent = 'Sending…';

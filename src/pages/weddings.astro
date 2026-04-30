@@ -17,13 +17,13 @@ const photos = [
 const packages = [
   {
     name: 'Half Day',
-    price: 'from £900',
+    price: 'from 900 €',
     duration: '4 hours coverage',
     includes: ['Ceremony or reception', '~250 edited photos', 'Online gallery', '2-week delivery'],
   },
   {
     name: 'Full Day',
-    price: 'from £1,650',
+    price: 'from 1,650 €',
     duration: '8 hours coverage',
     featured: true,
     includes: [
@@ -149,12 +149,20 @@ const packages = [
         <p class="mt-4 text-ink/70 reveal">
           The fastest way to get a quote is a quick email with the date, location, and a sentence about you both.
         </p>
-        <a
-          href="mailto:chrisjasonmcqueen@icloud.com?subject=Wedding%20Inquiry"
-          class="mt-8 inline-block font-display text-2xl md:text-3xl text-ink hover:text-ink/70 transition reveal"
-        >
-          chrisjasonmcqueen@icloud.com
-        </a>
+        <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center items-center reveal">
+          <a
+            href="/contact?topic=wedding"
+            class="inline-flex items-center justify-center gap-1 px-6 py-3 rounded-full bg-ink text-white text-sm font-medium hover:bg-ink/85 transition"
+          >
+            Use the contact form <span aria-hidden="true">›</span>
+          </a>
+          <a
+            href="mailto:chrisjasonmcqueen@icloud.com?subject=Wedding%20Inquiry"
+            class="inline-block font-display text-xl md:text-2xl text-ink hover:text-ink/70 transition"
+          >
+            chrisjasonmcqueen@icloud.com
+          </a>
+        </div>
       </div>
     </section>
   </main>
