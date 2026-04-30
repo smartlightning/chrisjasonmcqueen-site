@@ -1,0 +1,16 @@
+{
+  "// Tailwind directives": "@tailwind / @apply / @layer are valid in this project. Tell the built-in CSS linter to stop flagging them and let the Tailwind CSS IntelliSense extension take over.",
+  "css.lint.unknownAtRules": "ignore",
+  "scss.lint.unknownAtRules": "ignore",
+  "less.lint.unknownAtRules": "ignore",
+  "css.customData": [".vscode/css-custom-data.json"],
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+  "tailwindCSS.includeLanguages": {
+    "astro": "html"
+  },
+  "editor.quickSuggestions": {
+    "strings": true
+  }
+}

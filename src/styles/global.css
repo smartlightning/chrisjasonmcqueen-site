@@ -53,10 +53,12 @@ body {
   transform: translateY(0);
 }
 
-/* Pinned section "sticky" pattern like apple.com */
+/* Pinned section "sticky" pattern like apple.com.
+   Total height = 1× sticky viewport + a small scroll runway for the parallax effect.
+   Keep the runway short so users don't feel like they're scrolling through dead space. */
 .pin-section {
   position: relative;
-  height: 220vh;
+  height: 130vh;
 }
 .pin-inner {
   position: sticky;
@@ -66,6 +68,11 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+@media (max-width: 768px) {
+  .pin-section {
+    height: 115vh;
+  }
 }
 
 /* Elegant blank state for empty photo slots.

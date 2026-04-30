@@ -24,7 +24,6 @@ const discountPct = (() => {
 //   public/images/products/<slug>/1.jpg, 2.jpg, 3.jpg
 // (No build error if missing; the hero falls back to the gradient mockup.)
 const galleryBase = `/images/products/${product.slug}`;
-const galleryImages = [1, 2, 3].map((n) => `${galleryBase}/${n}.jpg`);
 
 // Special hero treatment for wallpapers product — three floating phone mockups
 const isWallpapers = product.slug === 'pocket-faith-wallpapers';
